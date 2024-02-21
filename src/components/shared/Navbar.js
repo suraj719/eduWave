@@ -4,6 +4,7 @@ import { Oval } from "react-loader-spinner";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const [isSignedIn, setIsSignedIn] = useState(false);
   const [loading, setIsLoading] = useState(false);
 
   return (
@@ -38,7 +39,15 @@ export default function Navbar() {
             </>
           ) : (
             <div className="text-white">
-              <p>Login</p>
+              {isSignedIn ? (
+                <div>
+                  <p>Log out</p>
+                </div>
+              ) : (
+                <Link to="/auth">
+                  <p>Login</p>
+                </Link>
+              )}
             </div>
           )}
         </div>
