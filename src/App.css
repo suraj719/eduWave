@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "strickwire";
+  src: url("/src/STRICKWIRE-Regular.otf") format("opentype");
+}
+
+.font-str {
+  font-family: "strickwire" !important;
+}
