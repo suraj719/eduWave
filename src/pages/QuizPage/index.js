@@ -23,73 +23,78 @@ function shuffleQuestions(questions) {
 }
 
 export default function QuizPage() {
-  const questions = [
-    {
-      question_text: "What is the capital of France?",
-      options: ["Paris", "London", "Berlin", "Rome"],
-      answer: "Paris",
-    },
-    {
-      question_text: "What is the largest planet in our solar system?",
-      options: ["Jupiter", "Saturn", "Uranus", "Neptune"],
-      answer: "Jupiter",
-    },
-    {
-      question_text: "What is the chemical formula for water?",
-      options: ["H2O", "CO2", "NaCl", "NH3"],
-      answer: "H2O",
-    },
-    {
-      question_text: "What is the tallest mountain in the world?",
-      options: ["Mount Everest", "K2", "Kangchenjunga", "Lhotse"],
-      answer: "Mount Everest",
-    },
-    {
-      question_text: "What is the most populous city in the world?",
-      options: ["Tokyo", "Delhi", "Shanghai", "São Paulo"],
-      answer: "Tokyo",
-    },
-    {
-      question_text: "What is the name of the largest ocean on Earth?",
-      options: [
-        "Pacific Ocean",
-        "Atlantic Ocean",
-        "Indian Ocean",
-        "Arctic Ocean",
-      ],
-      answer: "Pacific Ocean",
-    },
-    {
-      question_text: "In what year was the Declaration of Independence signed?",
-      options: ["1776", "1783", "1789", "1803"],
-      answer: "1776",
-    },
-    {
-      question_text: "What is the name of the Mona Lisa's creator?",
-      options: [
-        "Leonardo da Vinci",
-        "Michelangelo",
-        "Raphael",
-        "Sandro Botticelli",
-      ],
-      answer: "Leonardo da Vinci",
-    },
-    {
-      question_text: "What is the capital of Australia?",
-      options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
-      answer: "Canberra",
-    },
-    {
-      question_text: "What is the tallest building in the world?",
-      options: [
-        "Burj Khalifa",
-        "Shanghai Tower",
-        "Abraj Al-Bait Clock Tower",
-        "One World Trade Center",
-      ],
-      answer: "Burj Khalifa",
-    },
-  ];
+  const questions = {
+    title: "General quiz",
+    background: "../assets/quiz1-template.png",
+    questions: [
+      {
+        question_text: "What is the capital of France?",
+        options: ["Paris", "London", "Berlin", "Rome"],
+        answer: "Paris",
+      },
+      {
+        question_text: "What is the largest planet in our solar system?",
+        options: ["Jupiter", "Saturn", "Uranus", "Neptune"],
+        answer: "Jupiter",
+      },
+      {
+        question_text: "What is the chemical formula for water?",
+        options: ["H2O", "CO2", "NaCl", "NH3"],
+        answer: "H2O",
+      },
+      {
+        question_text: "What is the tallest mountain in the world?",
+        options: ["Mount Everest", "K2", "Kangchenjunga", "Lhotse"],
+        answer: "Mount Everest",
+      },
+      {
+        question_text: "What is the most populous city in the world?",
+        options: ["Tokyo", "Delhi", "Shanghai", "São Paulo"],
+        answer: "Tokyo",
+      },
+      {
+        question_text: "What is the name of the largest ocean on Earth?",
+        options: [
+          "Pacific Ocean",
+          "Atlantic Ocean",
+          "Indian Ocean",
+          "Arctic Ocean",
+        ],
+        answer: "Pacific Ocean",
+      },
+      {
+        question_text:
+          "In what year was the Declaration of Independence signed?",
+        options: ["1776", "1783", "1789", "1803"],
+        answer: "1776",
+      },
+      {
+        question_text: "What is the name of the Mona Lisa's creator?",
+        options: [
+          "Leonardo da Vinci",
+          "Michelangelo",
+          "Raphael",
+          "Sandro Botticelli",
+        ],
+        answer: "Leonardo da Vinci",
+      },
+      {
+        question_text: "What is the capital of Australia?",
+        options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+        answer: "Canberra",
+      },
+      {
+        question_text: "What is the tallest building in the world?",
+        options: [
+          "Burj Khalifa",
+          "Shanghai Tower",
+          "Abraj Al-Bait Clock Tower",
+          "One World Trade Center",
+        ],
+        answer: "Burj Khalifa",
+      },
+    ],
+  };
   const [index, setIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -98,7 +103,7 @@ export default function QuizPage() {
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
   useEffect(() => {
-    setShuffledQuestions(shuffleQuestions(questions));
+    setShuffledQuestions(shuffleQuestions(questions.questions));
     setIsLoading(false); // Set loading to false once shuffling is done
   }, []);
 
@@ -124,10 +129,11 @@ export default function QuizPage() {
       ) : (
         <>
           <div className="flex flex-col items-center justify-center h-[90vh]">
+            <p className="text-white text-xl">{questions.title}</p>
             <div
               className="rounded-xl flex items-center justify-center w-[55vw] h-[70vh]"
               style={{
-                backgroundImage: "url(../assets/quiz1-template.png)",
+                backgroundImage: `url(${questions.background})`,
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "100% 100%",
               }}

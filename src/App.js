@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router";
 import "./App.css";
 import Navbar from "./components/shared/Navbar";
 import AuthPage from "./pages/AuthPage";
+import Canvas from "./pages/CanvasPage";
+import GenerateQuiz from "./pages/GenerateQuizPage";
 import HomePage from "./pages/HomePage";
 import QuizPage from "./pages/QuizPage";
 // import Stars from "./components/Stars/Stars";
@@ -13,6 +15,8 @@ function App() {
         <Route path="/" element={HomePage} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/quiz" element={<QuizPage />} />
+        <Route path="/canvas" element={<Canvas />} />
+        <Route path="/add-quiz" element={<GenerateQuiz />} />
       </Routes>
       {/* <Stars /> */}
     </>
