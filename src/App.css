@@ -6,3 +6,7 @@
 .font-str {
   font-family: "strickwire" !important;
 }
+
+body {
+  /* overflow: hidden; */
+}

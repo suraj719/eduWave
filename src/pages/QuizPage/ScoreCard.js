@@ -1,10 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Confetti from "react-confetti";
 
 export default function ScoreCard({ questions, score }) {
   const [check, setCheck] = useState(false);
   const [index, setIndex] = useState(0);
+  // const [showConfetti, setShowConfetti] = useState(true);
+
+  // useEffect(() => {
+  //   // Hide the confetti after 5 seconds
+  //   const timeout = setTimeout(() => {
+  //     setShowConfetti(false);
+  //   }, 5000);
+
+  //   // Clear the timeout when the component unmounts or if the confetti is hidden early
+  //   return () => clearTimeout(timeout);
+  // }, []); // This effect runs only once, on component mount
   return (
-    <>
+    <div>
+      {!check && (
+        <Confetti
+          width={window.innerWidth - 100}
+          heigh={window.innerHeight}
+          numberOfPieces={100}
+        />
+      )}
       {check ? (
         <>
           {index !== 0 && (
@@ -79,6 +98,6 @@ export default function ScoreCard({ questions, score }) {
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
