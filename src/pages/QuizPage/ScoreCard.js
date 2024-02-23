@@ -16,7 +16,7 @@ export default function ScoreCard({ questions, score }) {
   //   return () => clearTimeout(timeout);
   // }, []); // This effect runs only once, on component mount
   return (
-    <div>
+    <>
       {!check && (
         <Confetti
           width={window.innerWidth - 100}
@@ -25,7 +25,7 @@ export default function ScoreCard({ questions, score }) {
         />
       )}
       {check ? (
-        <>
+        <div className="flex items-center justify-center w-full">
           {index !== 0 && (
             <button onClick={() => setIndex(index - 1)}>
               <svg
@@ -84,7 +84,7 @@ export default function ScoreCard({ questions, score }) {
               </svg>
             </button>
           )}
-        </>
+        </div>
       ) : (
         <div className="flex flex-col items-center justify-center">
           <p className="font-bold font-str text-6xl text-center">
@@ -98,6 +98,6 @@ export default function ScoreCard({ questions, score }) {
           </button>
         </div>
       )}
-    </div>
+    </>
   );
 }
