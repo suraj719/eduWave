@@ -73,7 +73,6 @@ export default function Signup() {
               type="submit"
               className="cursor-wait w-full border text-4xl font-halloween border-white text-xl bg-gray-600 text-white px-10 py-3 mt-8
               "
-              // onClick={handleRegister}
               disabled
             >
               Register
@@ -81,21 +80,9 @@ export default function Signup() {
           </>
         ) : (
           <>
-            <button
-              //   onClick={handleLogin}
-              className="w-full border text-4xl font-halloween border-white text-xl hover:bg-gray-600 text-white px-10 py-3 mt-8"
-            >
+            <button className="w-full border text-4xl font-halloween border-white text-xl hover:bg-gray-600 text-white px-10 py-3 mt-8">
               Register
             </button>
-            {/* <button
-              type="submit"
-              className="w-full py-2 text-white font-bold text-lg bg-blue-600 rounded-md text-center
-              hover:bg-blue-700
-              "
-              onClick={handleRegister}
-            >
-              Register
-            </button> */}
           </>
         )}
       </div>
