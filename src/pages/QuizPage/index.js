@@ -3,98 +3,25 @@ import Loader from "../../components/Loaders/Loader";
 import ScoreCard from "./ScoreCard";
 import Slide from "./Slide";
 
-function shuffleArray(array) {
-  // Create a copy of the array to avoid mutating the original array
-  const newArray = array.slice();
-  for (let i = newArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // Swap elements
+export default function QuizPage({ questions }) {
+  function shuffleArray(array) {
+    // Create a copy of the array to avoid mutating the original array
+    const newArray = array.slice();
+    for (let i = newArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArray[i], newArray[j]] = [newArray[j], newArray[i]]; // Swap elements
+    }
+    return newArray;
   }
-  return newArray;
-}
 
-function shuffleQuestions(questions) {
-  return shuffleArray(
-    questions.map((question) => ({
-      ...question,
-      options: shuffleArray(question.options),
-    }))
-  );
-}
-
-export default function QuizPage() {
-  const questions = {
-    title: "General quiz",
-    background: "../assets/quiz1-template.png",
-    questions: [
-      {
-        question_text: "What is the capital of France?",
-        options: ["Paris", "London", "Berlin", "Rome"],
-        answer: "Paris",
-      },
-      {
-        question_text: "What is the largest planet in our solar system?",
-        options: ["Jupiter", "Saturn", "Uranus", "Neptune"],
-        answer: "Jupiter",
-      },
-      {
-        question_text: "What is the chemical formula for water?",
-        options: ["H2O", "CO2", "NaCl", "NH3"],
-        answer: "H2O",
-      },
-      {
-        question_text: "What is the tallest mountain in the world?",
-        options: ["Mount Everest", "K2", "Kangchenjunga", "Lhotse"],
-        answer: "Mount Everest",
-      },
-      {
-        question_text: "What is the most populous city in the world?",
-        options: ["Tokyo", "Delhi", "Shanghai", "São Paulo"],
-        answer: "Tokyo",
-      },
-      {
-        question_text: "What is the name of the largest ocean on Earth?",
-        options: [
-          "Pacific Ocean",
-          "Atlantic Ocean",
-          "Indian Ocean",
-          "Arctic Ocean",
-        ],
-        answer: "Pacific Ocean",
-      },
-      {
-        question_text:
-          "In what year was the Declaration of Independence signed?",
-        options: ["1776", "1783", "1789", "1803"],
-        answer: "1776",
-      },
-      {
-        question_text: "What is the name of the Mona Lisa's creator?",
-        options: [
-          "Leonardo da Vinci",
-          "Michelangelo",
-          "Raphael",
-          "Sandro Botticelli",
-        ],
-        answer: "Leonardo da Vinci",
-      },
-      {
-        question_text: "What is the capital of Australia?",
-        options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
-        answer: "Canberra",
-      },
-      {
-        question_text: "What is the tallest building in the world?",
-        options: [
-          "Burj Khalifa",
-          "Shanghai Tower",
-          "Abraj Al-Bait Clock Tower",
-          "One World Trade Center",
-        ],
-        answer: "Burj Khalifa",
-      },
-    ],
-  };
+  function shuffleQuestions(questions) {
+    return shuffleArray(
+      questions.map((question) => ({
+        ...question,
+        options: shuffleArray(question.options),
+      }))
+    );
+  }
   const [index, setIndex] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState({});
   const [submitted, setSubmitted] = useState(false);

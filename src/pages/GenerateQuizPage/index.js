@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Example from "./Modal";
 
 export default function GenerateQuiz() {
+  const navigate = useNavigate();
   const [opened, setOpened] = useState(false);
   const [quizTitle, setQuizTitle] = useState("");
   const [questions, setQuestions] = useState([]);
@@ -60,13 +62,38 @@ export default function GenerateQuiz() {
     // Here you can perform any action with the generated JSON data, such as sending it to the server
   };
 
+  const handlePreview = () => {
+    // Check if quiz title is provided
+    if (quizTitle.trim() !== "") {
+      // Redirect to preview route with quiz data
+      const formattedQuestions = questions.map((question) => ({
+        question_text: question.question_text,
+        options: question.options.filter((option) => option.trim() !== ""), // Remove empty options
+        answer: question.answer,
+      }));
+
+      const quizData = {
+        title: quizTitle,
+        background: background,
+        questions: formattedQuestions,
+      };
+
+      localStorage.setItem("quizPreview", JSON.stringify(quizData));
+
+      // Open the preview route in a new tab
+      window.open(`/preview/${quizTitle}`, "_blank");
+    } else {
+      alert("Please provide a title for the quiz.");
+    }
+  };
+
   return (
     <>
       <div className="flex flex-wrap justify-evenly">
         <div className="w-[20vw] h-[90vh] flex items-center">
           <div className="rounded-lg p-4 border-4 border-white flex flex-col gap-4">
             <div>
-              <label className="text-white">Title of the quiz: </label>
+              <label className="text-white">Title of the quiz*: </label>
               <input
                 className="outline-none rounded-lg px-2 py-1 w-full"
                 type="text"
@@ -77,7 +104,7 @@ export default function GenerateQuiz() {
               />
             </div>
             <div className="-mt-2">
-              <label className="text-white">Class: </label>
+              <label className="text-white">Class*: </label>
               <select className="w-full rounded-lg px-2 py-1">
                 <option value={1}>1st class</option>
                 <option value={2}>2nd class</option>
@@ -105,6 +132,14 @@ export default function GenerateQuiz() {
                 className="bg-white rounded-lg p-2 w-full"
               >
                 Select quiz background
+              </button>
+            </div>
+            <div>
+              <button
+                className="bg-white rounded-lg p-2 w-full"
+                onClick={handlePreview}
+              >
+                preview quiz
               </button>
             </div>
             <div>
@@ -159,7 +194,7 @@ export default function GenerateQuiz() {
                 onChange={(e) => handleSelectCorrectAnswer(index, e)}
                 value={question.answer}
               >
-                {/* <option value="">Select correct answer</option> */}
+                <option value="">select correct option</option>
                 {question.options.map((option, optionIndex) => (
                   <option key={optionIndex} value={option}>
                     {option || `option ${optionIndex + 1}`}
