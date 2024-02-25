@@ -9,7 +9,7 @@ export default function GenerateQuiz() {
   const [quizTitle, setQuizTitle] = useState("");
   const [questions, setQuestions] = useState([]);
   const [background, setBackground] = useState("");
-  const [quizClass, setQuizClass] = useState(1);
+  const [quizClass, setQuizClass] = useState("");
   // Function to add a question
   const addQuestion = () => {
     setQuestions([
@@ -103,7 +103,7 @@ export default function GenerateQuiz() {
                 <input
                   className="outline-none rounded-lg px-2 py-1 w-full"
                   type="text"
-                  placeholder="An attractive title for your quiz *"
+                  placeholder="An attractive title for your quiz"
                   value={quizTitle}
                   onChange={(e) => setQuizTitle(e.target.value)}
                   required
@@ -111,7 +111,15 @@ export default function GenerateQuiz() {
               </div>
               <div className="-mt-2">
                 <label className="text-white">Class*: </label>
-                <select
+                <input
+                  className="outline-none rounded-lg px-2 py-1 w-full"
+                  type="text"
+                  placeholder="Student class"
+                  value={quizClass}
+                  onChange={(e) => setQuizClass(e.target.value)}
+                  required
+                />
+                {/* <select
                   className="w-full rounded-lg px-2 py-1"
                   onChange={(e) => setQuizClass(e.target.value)}
                 >
@@ -128,7 +136,7 @@ export default function GenerateQuiz() {
                   <option value={8}>8th class</option>
                   <option value={9}>9th class</option>
                   <option value={10}>10th class</option>
-                </select>
+                </select> */}
               </div>
               <div>
                 <button

@@ -16,6 +16,7 @@ import TeacherLogin from "./pages/AuthPage/Teacher/TeacherLogin";
 import Spinner from "./components/Loaders/Spinner";
 import ProtectedTeacherRoute from "./components/Auth/ProtectedTeacherRoute";
 import TeacherDashboard from "./pages/DashboardPage/Teacher/TeacherDashboard";
+import AddStudent from "./pages/DashboardPage/Teacher/AddStudent";
 // import Stars from "./components/Stars/Stars";
 
 function App() {
@@ -96,7 +97,7 @@ function App() {
             </ProtectedTeacherRoute>
           }
         />
-
+        <Route path="/dashboard/teacher/students" element={<AddStudent />} />
         {/* <Route path="/auth/teacher/register" element={<Register />} />
         <Route path="/auth/teacher/login" element={<Login />} /> */}
 

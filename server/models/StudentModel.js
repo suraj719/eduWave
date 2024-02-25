@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const studentSchema = new mongoose.Schema({
   name: String,
-  rollnumber:String,
+  rollNumber: String,
   email: String,
   password: String,
+  parentName: String,
   parentEmail: String,
   parentPhone: String,
-  class: Number,
+  class: String,
 });
 
 module.exports = mongoose.model("students", studentSchema);
