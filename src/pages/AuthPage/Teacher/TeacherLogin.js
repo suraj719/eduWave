@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Login() {
+export default function TeacherLogin() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [email, setMail] = useState("");
@@ -14,7 +14,7 @@ export default function Login() {
     try {
       setIsLoading(true);
       const response = await axios.post(
-        `${process.env.REACT_APP_BACKEND_URL}/api/employee/login`,
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/login`,
         {
           email: email,
           password: password,
@@ -24,7 +24,7 @@ export default function Login() {
       if (response.data.success) {
         toast.success(response.data.message);
         localStorage.setItem("token", response.data.data);
-        // navigate("/employee");
+        navigate("/dashboard/teacher");
       } else {
         toast.error(response.data.message);
       }

@@ -49,7 +49,7 @@ const loginTeacher = async (req, res) => {
       });
     }
     const token = jwt.sign({ teacherID: teacher._id }, process.env.jwt_secret, {
-      expiresIn: "10m",
+      expiresIn: "12h",
     });
     res.status(200).send({
       message: "Login successful",
@@ -64,7 +64,33 @@ const loginTeacher = async (req, res) => {
   }
 };
 
+const getTeacher = async (req, res) => {
+  try {
+    const teacher = await Teacher.findOne({
+      _id: req.body.teacherID,
+    });
+    if (!teacher) {
+      return res.status(200).send({
+        message: "Teacher not found",
+        success: false,
+      });
+    }
+    teacher.password = undefined;
+    res.status(200).send({
+      message: "Teacher found",
+      success: true,
+      data: teacher,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   loginTeacher,
   createTeacher,
+  getTeacher,
 };

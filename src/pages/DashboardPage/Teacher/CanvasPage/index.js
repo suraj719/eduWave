@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import TeacherSideBar from "../../../../components/shared/TeacherSideBar";
 
 export default function Canvas() {
   const [isDrawing, setIsDrawing] = useState(false);
@@ -83,13 +84,13 @@ export default function Canvas() {
 
   const getPen = () => {
     setCursor("default");
-    setSize("3");
+    // setSize("3");
     setColor("#3B3B3B");
   };
 
   const eraseCanvas = () => {
     setCursor("grab");
-    setSize("20");
+    // setSize("20");
     setColor("#FFFFFF");
   };
 
@@ -106,54 +107,59 @@ export default function Canvas() {
 
   return (
     <>
-      <div className="h-[90vh] bg-white overflow-y-hidden">
-        <div className="canvas m-5 border-4 border-black">
-          <canvas
-            className="w-full h-[70vh]"
-            style={{ cursor: cursor }}
-            onMouseDown={startPosition}
-            onMouseUp={finishedPosition}
-            onMouseMove={draw}
-            ref={canvasRef}
-          />
-        </div>
-        <div className="canvas-btn flex items-center justify-evenly text-3xl">
-          <button onClick={getPen}>
-            <p>Draw</p>
-          </button>
-          <div className="btn-width color">
-            <label>Brush color: </label>
-            <input
-              className="w-[5rem]"
-              type="color"
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
+      <div className="flex">
+        <TeacherSideBar />
+        <div className="mx-2 rounded-lg h-[90vh] w-full  overflow-y-hidden">
+          <div className="canvas m-5 ">
+            <canvas
+              className="w-full h-[75vh] rounded-lg"
+              style={{ cursor: cursor }}
+              onMouseDown={startPosition}
+              onMouseUp={finishedPosition}
+              onMouseMove={draw}
+              ref={canvasRef}
             />
           </div>
-          <div>
-            <label>Brush size: </label>
-            <select
-              className="btn-width"
-              value={size}
-              onChange={(e) => setSize(e.target.value)}
-            >
-              <option>1</option>
-              <option>3</option>
-              <option>5</option>
-              <option>10</option>
-              <option>15</option>
-              <option>20</option>
-              <option>25</option>
-              <option>30</option>
-            </select>
-          </div>
-          <button onClick={clearCanvas} className="btn-width">
-            Clear
-          </button>
-          <div>
-            <button onClick={eraseCanvas} className="btn-width">
-              Erase
-            </button>
+          <div className="flex items-center justify-center full ">
+            <div className="bg-gray-700 rounded-lg p-4 text-gray-300 canvas-btn flex gap-8 justify-evenly text-2xl">
+              <button onClick={getPen}>
+                <p>Draw</p>
+              </button>
+              <div className="btn-width color">
+                <label>Brush color: </label>
+                <input
+                  className="w-[5rem] bg-gray-700"
+                  type="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                />
+              </div>
+              <div>
+                <label>Brush size: </label>
+                <select
+                  className="btn-width bg-gray-700"
+                  value={size}
+                  onChange={(e) => setSize(e.target.value)}
+                >
+                  <option>1</option>
+                  <option>3</option>
+                  <option>5</option>
+                  <option>10</option>
+                  <option>15</option>
+                  <option>20</option>
+                  <option>25</option>
+                  <option>30</option>
+                </select>
+              </div>
+              <button onClick={clearCanvas} className="btn-width">
+                Clear
+              </button>
+              <div>
+                <button onClick={eraseCanvas} className="btn-width">
+                  Erase
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

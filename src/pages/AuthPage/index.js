@@ -1,47 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import Login from "../../components/Auth/Login";
-import Signup from "../../components/Auth/Signup";
-// import Stars from "../components/Stars/Stars";
-export default function AuthPage() {
-  const [showlogin, setShowLogin] = useState(true);
+
+export default function index() {
   return (
-    <div className="bg-black w-full h-full">
-      <div className="flex flex-col items-center h-[90vh] justify-center">
-        <div className="bg-gray-800 px-5 py-10 rounded-xl w-[25rem]">
-          {/* <p className="my-8 text-center font-halloween text-white text-6xl">
-            {showlogin ? "Login" : "Signup"}
+    <>
+      <div className="flex items-center justify-center h-[90vh]">
+        <div>
+          {/* <p className="flex flex-col  items-center text-white font-str text-4xl">
+            Are you a
           </p> */}
-          {showlogin ? <Login /> : <Signup />}
-          <div className="text-white font-halloween text-2xl text-center mt-4">
-            {showlogin ? (
-              <>
-                <p>
-                  Don't have an account ?{" "}
-                  <span
-                    onClick={() => setShowLogin(!showlogin)}
-                    className="text-red-300 font-bold cursor-pointer"
-                  >
-                    Register
-                  </span>
-                </p>
-              </>
-            ) : (
-              <>
-                <p>
-                  Already have an account ?{" "}
-                  <span
-                    onClick={() => setShowLogin(!showlogin)}
-                    className="text-red-300 font-bold cursor-pointer"
-                  >
-                    Login
-                  </span>
-                </p>
-              </>
-            )}
+          <div className="mt-4 flex items-center justify-around gap-20">
+            <Link to="/auth/student/login">
+              <div className="flex flex-col items-center">
+                <img src="../assets/student.png" />
+                <p className="text-white text-3xl font-str">Student</p>
+              </div>
+            </Link>
+            <p className="text-white text-xl font-str">OR</p>
+            <Link to="/auth/teacher/login">
+              <div className="flex flex-col items-center">
+                <img src="../assets/teacher.png" />
+                <p className="text-white text-3xl font-str">Teacher</p>
+              </div>
+            </Link>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

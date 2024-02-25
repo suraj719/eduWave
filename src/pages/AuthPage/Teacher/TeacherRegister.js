@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-export default function Register() {
+export default function TeacherRegister() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +25,7 @@ export default function Register() {
       setIsLoading(false);
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/teacher/login");
+        navigate("/auth/teacher/login");
       } else {
         toast.error(response.data.message);
       }

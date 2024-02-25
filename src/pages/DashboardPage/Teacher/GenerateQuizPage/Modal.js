@@ -10,9 +10,12 @@ export default function Example({ opened, handleSelect, handleClose }) {
 
   const [selectedImage, setSelectedImage] = useState("");
   const images = [
-    "../assets/quiz1-template.png",
-    "../assets/quiz1-template.png",
-    "../assets/quiz1-templates.png",
+    "/assets/quiz1-template.png",
+    "/assets/quiz2-template.png",
+    "/assets/quiz3-template.png",
+    "/assets/quiz4-template.png",
+    "/assets/quiz5-template.png",
+    "/assets/quiz6-template.png",
   ];
   return (
     <Transition.Root show={opened} as={Fragment}>
