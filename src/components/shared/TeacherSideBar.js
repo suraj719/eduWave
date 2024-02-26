@@ -34,7 +34,7 @@ const TeacherSideBar = () => {
     {
       title: "Quiz ",
       src: <QuestionMarkCircleIcon className="h-6 w-6 text-gray-100" />,
-      url: "/dashboard/teacher/create-quiz",
+      url: "/dashboard/teacher/all-quiz",
     },
     {
       title: "Draw",

@@ -56,7 +56,7 @@ export default function QuizPage({ questions }) {
       ) : (
         <>
           <div className="flex flex-col items-center justify-center h-[90vh]">
-            <p className="text-white text-xl">{questions.title}</p>
+            {/* <p className="text-white text-xl">{questions.title}</p> */}
             <div
               className="rounded-xl flex items-center justify-center w-[55vw] h-[70vh]"
               style={{

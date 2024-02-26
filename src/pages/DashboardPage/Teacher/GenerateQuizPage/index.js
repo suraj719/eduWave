@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import TeacherSideBar from "../../../../components/shared/TeacherSideBar";
 import Example from "./Modal";
+import { useDispatch } from "react-redux";
+import { ShowLoading, HideLoading } from "../../../../redux/alerts";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function GenerateQuiz() {
   const navigate = useNavigate();
+  const { teacher } = useSelector((state) => state.teacher);
+  const dispatch = useDispatch();
   const [opened, setOpened] = useState(false);
   const [quizTitle, setQuizTitle] = useState("");
   const [questions, setQuestions] = useState([]);
@@ -47,22 +54,50 @@ export default function GenerateQuiz() {
   };
 
   // Function to save the quiz
-  const saveQuiz = () => {
+  const saveQuiz = async (e) => {
+    e.preventDefault();
     // Format questions to match desired JSON structure
     const formattedQuestions = questions.map((question) => ({
       question_text: question.question_text,
       options: question.options.filter((option) => option.trim() !== ""), // Remove empty options
       answer: question.answer,
     }));
-
     const quizData = {
-      title: quizTitle,
-      class: quizClass,
       background: background,
       questions: formattedQuestions,
     };
-    console.log(quizData);
-    // Here you can perform any action with the generated JSON data, such as sending it to the server
+    // console.log(quizData);
+    try {
+      dispatch(ShowLoading());
+      const dat = {
+        createdBy: teacher,
+        subject: "GK",
+        date: new Date(),
+        class: quizClass,
+        title: quizTitle,
+        quiz: quizData,
+      };
+      let response = null;
+      response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/add-quiz`,
+        dat,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/dashboard/teacher");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      toast.error(error.message);
+    }
   };
 
   const handlePreview = () => {
@@ -76,8 +111,6 @@ export default function GenerateQuiz() {
       }));
 
       const quizData = {
-        title: quizTitle,
-        class: quizClass,
         background: background,
         questions: formattedQuestions,
       };

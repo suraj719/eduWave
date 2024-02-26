@@ -5,7 +5,7 @@ const Student = require("../models/StudentModel");
 const createStudent = async (req, res) => {
   try {
     const studentExists = await Student.findOne({
-      username: req.body.username,
+      rollNumber: req.body.rollNumber,
     });
     if (studentExists) {
       return res.status(200).send({
@@ -19,7 +19,7 @@ const createStudent = async (req, res) => {
     const newStudent = new Student(req.body);
     await newStudent.save();
     res.status(200).send({
-      message: "Registration successful",
+      message: "Account created successfully",
       success: true,
     });
   } catch (error) {
@@ -33,7 +33,7 @@ const createStudent = async (req, res) => {
 const loginStudent = async (req, res) => {
   try {
     const student = await Student.findOne({
-      username: req.body.username,
+      rollNumber: req.body.rollNumber,
     });
     if (!student) {
       return res.status(200).send({

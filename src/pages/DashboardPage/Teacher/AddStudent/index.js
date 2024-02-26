@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import TeacherSideBar from "../../../../components/shared/TeacherSideBar";
+import { useDispatch } from "react-redux";
+import { ShowLoading, HideLoading } from "../../../../redux/alerts";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 export default function AddStudent() {
   const [formData, setFormData] = useState();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -10,9 +17,31 @@ export default function AddStudent() {
       [name]: value,
     });
   };
-  const createAccount = (e) => {
+  const createAccount = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    try {
+      dispatch(ShowLoading());
+      let response = null;
+      response = await axios.post(
+        `${process.env.REACT_APP_BACKEND_URL}/api/teacher/add-student`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      dispatch(HideLoading());
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate("/dashboard/teacher");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(HideLoading());
+      toast.error(error.message);
+    }
   };
   return (
     <>

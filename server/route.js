@@ -11,6 +11,7 @@ const {
 } = require("./controllers/TeacherController");
 const authMiddlewareTeacher = require("./middlewares/authMiddlewareTeacher");
 const authMiddlewareStudent = require("./middlewares/authMiddlewareStudent");
+const { createQuiz, getAllQuiz } = require("./controllers/QuizController");
 const router = express.Router();
 
 // routes for teacher
@@ -19,12 +20,14 @@ router.route("/teacher/login").post(loginTeacher);
 router
   .route("/teacher/get-teacher-by-id")
   .post(authMiddlewareTeacher, getTeacher);
-router.route("/student/create").post(createStudent);
-
+router.route("/teacher/add-student").post(authMiddlewareTeacher, createStudent);
+router.route("/teacher/add-quiz").post(authMiddlewareTeacher, createQuiz);
 // routes for student
 router.route("/student/login").post(loginStudent);
 router
   .route("/student/get-student-by-id")
   .post(authMiddlewareStudent, getStudent);
 
+// routes common for both teacher and student
+router.route("/get-all-quiz").get(getAllQuiz);
 module.exports = router;
