@@ -23,6 +23,7 @@ export default function StudentLogin() {
       if (response.data.success) {
         toast.success(response.data.message);
         localStorage.setItem("token", response.data.data);
+        localStorage.setItem("type", "student");
         navigate("/dashboard/student");
       } else {
         toast.error(response.data.message);

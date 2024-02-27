@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../../redux/alerts.js";
 import { SetTeacher } from "../../redux/teachers.js";
 import { useNavigate } from "react-router-dom";
-
+import DefaultLayout from "./DefaultLayout";
 function ProtectedTeacherRoute(props) {
   const navigate = useNavigate();
   const [readyToRednder, setReadyToRednder] = React.useState(false);
@@ -39,13 +39,7 @@ function ProtectedTeacherRoute(props) {
     geEmployeeData();
   }, []);
 
-  return (
-    readyToRednder && (
-      <>
-        <div>{props.children}</div>
-      </>
-    )
-  );
+  return readyToRednder && <DefaultLayout>{props.children}</DefaultLayout>;
 }
 
 export default ProtectedTeacherRoute;

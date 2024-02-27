@@ -61,6 +61,7 @@ const loginTeacher = async (req, res) => {
       message: "Login successful",
       success: true,
       data: token,
+      userID: teacher._id,
     });
   } catch (error) {
     res.status(500).send({

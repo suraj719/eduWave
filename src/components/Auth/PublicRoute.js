@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 function PublicRoute(props) {
   const navigate = useNavigate();
-  const { teacher } = useSelector((state) => state.teacher);
-  const { student } = useSelector((state) => state.student);
+  const type = localStorage.getItem("type");
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      if (teacher) {
+      if (type === "teacher") {
         navigate("/dashboard/teacher");
-      } else if (student) {
+      } else if (type === "student") {
         navigate("/dashboard/student");
       }
     }

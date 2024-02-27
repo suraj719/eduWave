@@ -23,13 +23,13 @@ import ProtectedStudentRoute from "./components/Auth/ProtectedStudentRoute";
 import StudentLogin from "./pages/AuthPage/Student/StudentLogin";
 import StudentDashboard from "./pages/DashboardPage/Student/StudentDashboard";
 import QuizPageStudent from "./pages/DashboardPage/Student/QuizPageStudent";
+import QuizStudent from "./pages/DashboardPage/Student/QuizPageStudent/QuizStudent";
 // import Stars from "./components/Stars/Stars";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
   return (
     <>
-      <Navbar />
       {loading ? <Spinner /> : null}
       <Toaster />
       <Routes>
@@ -83,6 +83,15 @@ function App() {
           }
         />
         <Route
+          path="/dashboard/teacher/students"
+          element={
+            <ProtectedTeacherRoute>
+              <AddStudent />
+            </ProtectedTeacherRoute>
+          }
+        />
+
+        <Route
           path="/dashboard/teacher/preview/:quizTitle"
           element={
             <ProtectedTeacherRoute>
@@ -123,8 +132,15 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
+        <Route
+          path="/quiz/student/:id"
+          element={
+            <ProtectedStudentRoute>
+              <QuizStudent />
+            </ProtectedStudentRoute>
+          }
+        />
         <Route path="/quiz/:id" element={<QuizPage />} />
-        <Route path="/dashboard/teacher/students" element={<AddStudent />} />
         {/* <Route path="/preview/:quizTitle" element={<PreviewQuiz />} /> */}
         {/* <Route path="/dashboard/teacher" element={<TeacherDashboard />} /> */}
         {/* <Route path="/quiz" element={<QuizPageTeacher />} /> */}

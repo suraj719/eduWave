@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../../redux/alerts.js";
 import { SetStudent } from "../../redux/students.js";
 import { useNavigate } from "react-router-dom";
+import DefaultLayout from "./DefaultLayout.js";
 
 function ProtectedStudentRoute(props) {
   const navigate = useNavigate();
@@ -39,13 +40,7 @@ function ProtectedStudentRoute(props) {
     geEmployeeData();
   }, []);
 
-  return (
-    readyToRednder && (
-      <>
-        <div>{props.children}</div>
-      </>
-    )
-  );
+  return readyToRednder && <DefaultLayout>{props.children}</DefaultLayout>;
 }
 
 export default ProtectedStudentRoute;
