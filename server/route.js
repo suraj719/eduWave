@@ -11,7 +11,11 @@ const {
 } = require("./controllers/TeacherController");
 const authMiddlewareTeacher = require("./middlewares/authMiddlewareTeacher");
 const authMiddlewareStudent = require("./middlewares/authMiddlewareStudent");
-const { createQuiz, getAllQuiz } = require("./controllers/QuizController");
+const {
+  createQuiz,
+  getAllQuiz,
+  getQuiz,
+} = require("./controllers/QuizController");
 const router = express.Router();
 
 // routes for teacher
@@ -30,4 +34,5 @@ router
 
 // routes common for both teacher and student
 router.route("/get-all-quiz").get(getAllQuiz);
+router.route("/quiz/:quizID").get(getQuiz);
 module.exports = router;

@@ -31,7 +31,24 @@ const getAllQuiz = async (req, res) => {
     });
   }
 };
+
+const getQuiz = async (req, res) => {
+  try {
+    const result = await Quiz.findById(req.params.quizID);
+    res.status(200).send({
+      message: "Quiz retrieved successfully",
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: "something went wrong!",
+      success: false,
+    });
+  }
+};
 module.exports = {
   createQuiz,
   getAllQuiz,
+  getQuiz,
 };

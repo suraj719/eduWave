@@ -1,247 +1,114 @@
-import React from "react";
+import React, { useState } from "react";
+import TableBody from "./TableBody";
 
 export default function LeaderBoardPage() {
-  const dados = [
+  const data = [
     {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
+      "Student Name": "Sarvesh kumar",
+      "Student Email": "sarveshkumar32717@gmail.com",
+      Institution: "Poornima University - Jaipur",
+      "Enrolment Date & Time": "Sun Sep 24 2023 17:34:18 GMT+0530 (GMT+05:30)",
+      "Enrolment Status": "All Good",
+      "Google Cloud Skills Boost Profile URL":
+        "https://www.cloudskillsboost.google/public_profiles/14959d1f-1793-4dee-b2c4-9e5bcc18daa2",
+      "# of Courses Completed": "4",
+      "# of Skill Badges Completed": "4",
+      "# of GenAI Game Completed": "1",
+      "Total Completions of both Pathways": "Yes",
+      "Redemption Status": "Yes",
     },
     {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
-    },
-    {
-      id: 1,
-      name: "Laura",
-      image: "https://cdn-icons-png.flaticon.com/512/186/186037.png",
-      level: 16,
-      xp: 100,
-      coins: 500,
-      love: 6,
-      beacons: 2,
-      resources: 70,
+      "Student Name": "ADISH SHARMA",
+      "Student Email": "adishsharma41@gmail.com",
+      Institution: "Poornima University - Jaipur",
+      "Enrolment Date & Time": "Tue Sep 26 2023 20:17:45 GMT+0530 (GMT+05:30)",
+      "Enrolment Status": "All Good",
+      "Google Cloud Skills Boost Profile URL":
+        "https://www.cloudskillsboost.google/public_profiles/e8d83246-461a-4627-8eec-55154ce9be1e",
+      "# of Courses Completed": "4",
+      "# of Skill Badges Completed": "4",
+      "# of GenAI Game Completed": "1",
+      "Total Completions of both Pathways": "Yes",
+      "Redemption Status": "Yes",
     },
   ];
+  const [Participationdata, setParticipationdata] = useState([...data]);
+  const [EligibleforSwags, setEligibleforSwags] = useState(0);
+  const [searchname, setSearchName] = useState("");
+  const searcForName = (name) => {
+    const newArr = [];
+    for (let i = 0; i < data.length; i++) {
+      let participant = data[i]["Student Name"].toLowerCase();
+      let match = participant.includes(name.toLowerCase());
+      if (match) newArr.push(data[i]);
+    }
+    // console.log(newArr);
+    setParticipationdata(newArr);
+  };
   return (
     <>
       <div>
-        {/* <div className="container">
-          <div className="topLeadersList">
-            {dados.map((leader, index) => (
-              <div className="leader" key={leader.id}>
-                {index + 1 <= 3 && (
-                  <div className="containerImage">
-                    <img className="image" loading="lazy" src={leader.image} />
-                    <div className="crown">
-                      <svg
-                        id="crown1"
-                        fill="#0f74b5"
-                        data-name="Layer 1"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 100 50"
-                      >
-                        <polygon
-                          className="cls-1"
-                          points="12.7 50 87.5 50 100 0 75 25 50 0 25.6 25 0 0 12.7 50"
-                        />
-                      </svg>
-                    </div>
-                    <div className="leaderName">{leader.name}</div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="playerslist">
-            <div className="table">
-              <div>#</div>
-
-              <div>Name</div>
-
-              <div>LVL</div>
-
-              <div>XP</div>
-
-              <div>Coins</div>
-
-              <div>Likes</div>
-
-              <div>Pass</div>
-
-              <div>Resources</div>
-            </div>
-            <div className="list">
-              {dados.map((leader, index) => (
-                <div className="player" key={leader.id}>
-                  <span> {index + 1}</span>
-                  <div className="user">
-                    <img className="image" src={leader.image} />
-                    <span> {leader.name} </span>
-                  </div>
-                  <span> {leader.level} </span>
-                  <span> {leader.xp} </span>
-                  <span> {leader.coins} </span>
-                  <span> {leader.love} </span>
-                  <span> {leader.beacons} </span>
-                  <span> {leader.resources} </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div> */}
-
-        <div className="container">
-          <div className="topLeadersList flex relative min-h-120px pt-12">
-            {dados.map((leader, index) => (
-              <div className="leader relative" key={leader.id}>
-                {index + 1 <= 3 && (
-                  <div className="containerImage relative">
-                    <img
-                      className="image h-32 w-32 rounded-full border-4 border-yellow-400"
-                      loading="lazy"
-                      src={leader.image}
-                      alt={leader.name}
-                    />
-                    <div className="crown absolute left-1/2 transform -translate-x-1/2 top-0">
-                      <svg
-                        id="crown1"
-                        fill="#0f74b5"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 100 50"
-                      >
-                        <polygon
-                          className="cls-1"
-                          points="12.7 50 87.5 50 100 0 75 25 50 0 25.6 25 0 0 12.7 50"
-                        />
-                      </svg>
-                    </div>
-                    <div className="leaderName absolute left-1/2 transform -translate-x-1/2 text-white text-center text-lg">
-                      {leader.name}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="playerslist mt-24 text-white">
-            <div className="table grid grid-cols-8">
-              <div className="font-bold">#</div>
-              <div className="font-bold">Name</div>
-              <div className="font-bold">LVL</div>
-              <div className="font-bold">XP</div>
-              <div className="font-bold">Coins</div>
-              <div className="font-bold">Likes</div>
-              <div className="font-bold">Pass</div>
-              <div className="font-bold">Resources</div>
-            </div>
-            <div className="list overflow-scroll h-80">
-              {dados.map((leader, index) => (
-                <div
-                  className="player grid grid-cols-8 items-center"
-                  key={leader.id}
+        <main className="pt-24">
+          <div className="p-2 relative">
+            <div className="flex justify-center items-center flex-wrap"></div>
+            <div className="flex items-center  my-10 bg-blue-100 rounded-full p-2 px-5 mx-auto md:w-2/6 w-full">
+              <div className="icon px-3 ">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5"
+                  viewBox="0 0 512 512"
                 >
-                  <span>{index + 1}</span>
-                  <div className="user flex items-center">
-                    <img
-                      className="image h-5 w-5 rounded-full border-2 border-white"
-                      src={leader.image}
-                      alt={leader.name}
-                    />
-                    <span className="ml-2">{leader.name}</span>
-                  </div>
-                  <span>{leader.level}</span>
-                  <span>{leader.xp}</span>
-                  <span>{leader.coins}</span>
-                  <span>{leader.love}</span>
-                  <span>{leader.beacons}</span>
-                  <span>{leader.resources}</span>
-                </div>
-              ))}
+                  <path
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                    fill="#3b82f6"
+                  />
+                </svg>
+              </div>
+              <div className="w-full">
+                <input
+                  onChange={(e) => {
+                    searcForName(e.target.value);
+                  }}
+                  className="bg-transparent text-base outline-none w-full"
+                  type="search"
+                  name="searchbar"
+                  id="searchbar"
+                  placeholder="Search Your Name Here"
+                />
+              </div>
+            </div>
+            <div className="relative">
+              <table className="mx-auto  relative">
+                <thead className="shadow-lg text-md bg-blue-500 text-gray-200 sticky top-20 z-20">
+                  <tr className="text-center ">
+                    <td className=" rounded-tl-lg  w-80 p-2 border-r-2 border-r-gray-300">
+                      Name
+                    </td>
+                    <td className="p-2 border-r-2 border-r-gray-300">
+                      Redemption Status
+                    </td>
+                    <td className="p-2 border-r-2 border-r-gray-300 max-w-[150px]">
+                      Completion of both Pathways
+                    </td>
+                    <td className="hidden md:table-cell p-2 border-r-2 border-r-gray-300 max-w-[150px]">
+                      No.of Courses Completed
+                    </td>
+                    <td className="hidden md:table-cell p-2 border-r-2 border-r-gray-300 max-w-[150px]">
+                      No.of Skill Badges Completed
+                    </td>
+                    <td className="hidden md:table-cell rounded-tr-lg p-4 max-w-[150px]">
+                      GenAI Game Completed
+                    </td>
+                  </tr>
+                </thead>
+                <TableBody
+                  Participationdata={Participationdata}
+                  setParticipationdata={setParticipationdata}
+                />
+              </table>
             </div>
           </div>
-        </div>
+        </main>
       </div>
     </>
   );

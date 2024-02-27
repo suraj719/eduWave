@@ -66,10 +66,10 @@ const loginStudent = async (req, res) => {
 
 const getStudent = async (req, res) => {
   try {
-    const student = await Teacher.findOne({
+    const student = await Student.findOne({
       _id: req.body.studentID,
     });
-    if (!teacher) {
+    if (!student) {
       return res.status(200).send({
         message: "Student not found",
         success: false,

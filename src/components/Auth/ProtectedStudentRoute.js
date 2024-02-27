@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { ShowLoading, HideLoading } from "../../redux/alerts.js";
-import { setStudent } from "../../redux/students.js";
+import { SetStudent } from "../../redux/students.js";
 import { useNavigate } from "react-router-dom";
 
-function ProtectedTeacherRoute(props) {
+function ProtectedStudentRoute(props) {
   const navigate = useNavigate();
   const [readyToRednder, setReadyToRednder] = React.useState(false);
   const dispatch = useDispatch();
@@ -24,11 +24,8 @@ function ProtectedTeacherRoute(props) {
           },
         }
       );
-      console.log(resposne);
       if (resposne.data.success) {
-        console.log(resposne.data);
-        dispatch(setStudent(resposne.data.data));
-        console.log(resposne);
+        dispatch(SetStudent(resposne.data.data));
         setReadyToRednder(true);
       }
     } catch (error) {
@@ -51,4 +48,4 @@ function ProtectedTeacherRoute(props) {
   );
 }
 
-export default ProtectedTeacherRoute;
+export default ProtectedStudentRoute;

@@ -24,11 +24,8 @@ function ProtectedTeacherRoute(props) {
           },
         }
       );
-      console.log(resposne);
       if (resposne.data.success) {
-        console.log(resposne.data);
         dispatch(SetTeacher(resposne.data.data));
-        console.log(resposne);
         setReadyToRednder(true);
       }
     } catch (error) {

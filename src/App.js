@@ -19,31 +19,14 @@ import TeacherDashboard from "./pages/DashboardPage/Teacher/TeacherDashboard";
 import AddStudent from "./pages/DashboardPage/Teacher/AddStudent";
 import QuizPageTeacher from "./pages/DashboardPage/Teacher/QuizPageTeacher";
 import LeaderBoardPage from "./pages/LeaderBoardPage";
+import ProtectedStudentRoute from "./components/Auth/ProtectedStudentRoute";
+import StudentLogin from "./pages/AuthPage/Student/StudentLogin";
+import StudentDashboard from "./pages/DashboardPage/Student/StudentDashboard";
+import QuizPageStudent from "./pages/DashboardPage/Student/QuizPageStudent";
 // import Stars from "./components/Stars/Stars";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
-  const questionss = {
-    title: "General quiz",
-    background: "../assets/quiz1-template.png",
-    questions: [
-      {
-        question_text: "What is the capital of France?",
-        options: ["Paris", "London", "Berlin", "Rome"],
-        answer: "Paris",
-      },
-      {
-        question_text: "What is the largest planet in our solar system?",
-        options: ["Jupiter", "Saturn", "Uranus", "Neptune"],
-        answer: "Jupiter",
-      },
-      {
-        question_text: "What is the chemical formula for water?",
-        options: ["H2O", "CO2", "NaCl", "NH3"],
-        answer: "H2O",
-      },
-    ],
-  };
   return (
     <>
       <Navbar />
@@ -73,6 +56,14 @@ function App() {
             <PublicRoute>
               <TeacherLogin />
             </PublicRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher"
+          element={
+            <ProtectedTeacherRoute>
+              <TeacherDashboard />
+            </ProtectedTeacherRoute>
           }
         />
         <Route
@@ -107,16 +98,35 @@ function App() {
             </ProtectedTeacherRoute>
           }
         />
-        <Route path="/dashboard/teacher/students" element={<AddStudent />} />
-        {/* <Route path="/auth/teacher/register" element={<Register />} />
-        <Route path="/auth/teacher/login" element={<Login />} /> */}
 
-        {/* <Route path="/auth" element={<AuthPage />} /> */}
-        {/* <Route path="/quiz" element={<QuizPage questions={questionss} />} /> */}
-        {/* <Route path="/canvas" element={<Canvas />} /> */}
-        <Route path="/add-quiz" element={<GenerateQuiz />} />
+        <Route
+          path="/auth/student/login"
+          element={
+            <PublicRoute>
+              <StudentLogin />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student"
+          element={
+            <ProtectedStudentRoute>
+              <StudentDashboard />
+            </ProtectedStudentRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/quiz"
+          element={
+            <ProtectedStudentRoute>
+              <QuizPageStudent />
+            </ProtectedStudentRoute>
+          }
+        />
+        <Route path="/quiz/:id" element={<QuizPage />} />
+        <Route path="/dashboard/teacher/students" element={<AddStudent />} />
         {/* <Route path="/preview/:quizTitle" element={<PreviewQuiz />} /> */}
-        <Route path="/dashboard/teacher" element={<TeacherDashboard />} />
+        {/* <Route path="/dashboard/teacher" element={<TeacherDashboard />} /> */}
         {/* <Route path="/quiz" element={<QuizPageTeacher />} /> */}
         <Route path="/leaderboard" element={<LeaderBoardPage />} />
       </Routes>

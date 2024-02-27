@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Confetti from "react-confetti";
 
-export default function ScoreCard({ questions, score }) {
+export default function ScoreCard({ questions, score, accuracy }) {
   const [check, setCheck] = useState(false);
   const [index, setIndex] = useState(0);
   // const [showConfetti, setShowConfetti] = useState(true);
@@ -89,6 +89,9 @@ export default function ScoreCard({ questions, score }) {
         <div className="flex flex-col items-center justify-center">
           <p className="font-bold font-str text-6xl text-center">
             Your score: {score}/{questions.length}
+          </p>
+          <p className="font-bold font-str text-6xl text-center">
+            Accuracy: {accuracy}%
           </p>
           <button
             onClick={() => setCheck(true)}

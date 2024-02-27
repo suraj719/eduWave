@@ -5,9 +5,7 @@ export default function TeacherDashboard() {
     <>
       <div className="flex">
         <TeacherSideBar />
-        <div>
-          
-        </div>
+        <div></div>
       </div>
     </>
   );

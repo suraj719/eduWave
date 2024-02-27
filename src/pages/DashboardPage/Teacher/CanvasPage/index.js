@@ -109,8 +109,8 @@ export default function Canvas() {
     <>
       <div className="flex">
         <TeacherSideBar />
-        <div className="mx-2 rounded-lg h-[90vh] w-full  overflow-y-hidden">
-          <div className="canvas m-5 ">
+        <div className="mx-2 rounded-lg h-[90vh] w-full overflow-y-hidden">
+          <div className="canvas m-5 bg-white rounded-lg">
             <canvas
               className="w-full h-[75vh] rounded-lg"
               style={{ cursor: cursor }}
