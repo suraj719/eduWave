@@ -24,6 +24,7 @@ import StudentLogin from "./pages/AuthPage/Student/StudentLogin";
 import StudentDashboard from "./pages/DashboardPage/Student/StudentDashboard";
 import QuizPageStudent from "./pages/DashboardPage/Student/QuizPageStudent";
 import QuizStudent from "./pages/DashboardPage/Student/QuizPageStudent/QuizStudent";
+import LeaderBoardStudent from "./pages/DashboardPage/Student/LeaderBoard/LeaderBoardStudent";
 // import Stars from "./components/Stars/Stars";
 
 function App() {
@@ -137,6 +138,14 @@ function App() {
           element={
             <ProtectedStudentRoute>
               <QuizStudent />
+            </ProtectedStudentRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/leaderboard"
+          element={
+            <ProtectedStudentRoute>
+              <LeaderBoardStudent />
             </ProtectedStudentRoute>
           }
         />

@@ -74,6 +74,7 @@ export default function QuizStudent() {
 
   const handleSelectOption = (option) => {
     // Get the current question
+    setSelectedOptions({ ...selectedOptions, [index]: option });
     const currentQuestion = shuffledQuestions[index];
     // Update the selected option for the current question
     const updatedQuestion = {
@@ -86,23 +87,40 @@ export default function QuizStudent() {
     setShuffledQuestions(updatedQuestions);
   };
 
-  const handleSubmit = () => {
-    // console.log(selectedOptions);
-    console.log(shuffledQuestions)
-    // setSubmitted(true);
-    // let correctCount = 0;
-    // shuffledQuestions.forEach((question, i) => {
-    //   if (selectedOptions[i] === question.answer) {
-    //     correctCount++;
-    //   }
-    // });
-    // setScore(correctCount);
-    // const currentAccuracy = (correctCount / shuffledQuestions.length) * 100;
-    // const formattedAccuracy = Number.isInteger(currentAccuracy)
-    //   ? currentAccuracy.toFixed(0)
-    //   : currentAccuracy.toFixed(2);
-    // // setAccuracy(currentAccuracy.toFixed(2));
-    // setAccuracy(formattedAccuracy);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+    let correctCount = 0;
+    shuffledQuestions.forEach((question, i) => {
+      if (selectedOptions[i] === question.answer) {
+        correctCount++;
+      }
+    });
+    setScore(correctCount);
+    const currentAccuracy = (correctCount / shuffledQuestions.length) * 100;
+    const formattedAccuracy = Number.isInteger(currentAccuracy)
+      ? currentAccuracy.toFixed(0)
+      : currentAccuracy.toFixed(2);
+    // setAccuracy(currentAccuracy.toFixed(2));
+    setAccuracy(formattedAccuracy);
+    const d = data;
+    d.quiz.questions = shuffledQuestions;
+    d.score = correctCount;
+    d.accuracy = formattedAccuracy;
+    d.attemptedAt = new Date();
+    d.user = student;
+    // console.log(d);
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/api/student/update-student`,
+      {
+        quiz: d,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
   };
   return (
     <>

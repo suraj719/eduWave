@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Student = require("../models/StudentModel");
-
+const Quiz = require("../models/QuizModel");
 const createStudent = async (req, res) => {
   try {
     const studentExists = await Student.findOne({
@@ -89,34 +89,17 @@ const getStudent = async (req, res) => {
   }
 };
 
-const updateStudent = async (req, res) => {
-  // try {
-  //   const student = await Student.findOneAndUpdate(
-  //     { _id: req.body.studentID },
-  //     req.body,
-  //     { new: true }
-  //   );
-  //   if (!student) {
-  //     return res.send({
-  //       message: "Student not found",
-  //       success: false,
-  //     });
-  //   }
-  //   res.status(200).send({
-  //     message: "Student updated successfully",
-  //     success: true,
-  //     data: student,
-  //   });
-  // } catch (error) {
-  //   res.status(500).send({
-  //     message: "something went wrong!!",
-  //     success: false,
-  //   });
-  // }
+const updateStudentQuiz = async (req, res) => {
   try {
+    const { user, ...restData } = req.body.quiz;
     const student = await Student.findOneAndUpdate(
       { _id: req.body.studentID },
-      { $push: { quizs: req.body.quiz } },
+      { $push: { quizs: restData } },
+      { new: true }
+    );
+    await Quiz.findOneAndUpdate(
+      { _id: req.body.quiz._id },
+      { $push: { attempts: req.body.quiz } },
       { new: true }
     );
     if (!student) {
@@ -141,5 +124,5 @@ module.exports = {
   loginStudent,
   createStudent,
   getStudent,
-  updateStudent,
+  updateStudentQuiz,
 };
