@@ -21,10 +21,14 @@ export default function QuizPageStudent() {
       dispatch(HideLoading());
       if (response.data.success) {
         const filteredQuizzes = response.data.data.filter(
-          (quiz) => quiz.class === student.class && new Date(quiz.deadline) > new Date()
+          (quiz) =>
+            quiz.class === student.class 
         );
         setData(filteredQuizzes);
         setTempData(response.data.data);
+        // const repeatedData = Array(15).fill(filteredQuizzes).flat();
+        // setData(repeatedData);
+        // setTempData(response.data.data);
       } else {
         toast.error(response.data.message);
       }
@@ -57,11 +61,31 @@ export default function QuizPageStudent() {
         <StudentSideBar />
         <div className="w-full p-4">
           <div className="bg-gray-200 rounded-lg p-2 text-gray-800  flex gap-8 justify-evenly text-xl mb-4">
-            <div className={quizType === "online" ? "bg-gray-700 w-[50%] text-center rounded-lg text-white" : "hover:bg-gray-600 w-[50%] text-center rounded-lg hover:text-white"}>
-              <button className="w-full" onClick={() => handleQuizType("online")}>Online</button>
+            <div
+              className={
+                quizType === "online"
+                  ? "bg-gray-700 py-2 w-[50%] text-center rounded-lg text-white"
+                  : "hover:bg-gray-600 py-2 w-[50%] text-center rounded-lg hover:text-white"
+              }
+            >
+              <button
+                className="w-full"
+                onClick={() => handleQuizType("online")}
+              >
+                Online
+              </button>
             </div>
-            <div className={quizType === "attempted" ? "bg-gray-700 w-[50%] text-center rounded-lg text-white" : "hover:bg-gray-600 w-[50%] text-center rounded-lg hover:text-white"}>
-              <button className="w-full" onClick={() => handleQuizType("attempted")}>
+            <div
+              className={
+                quizType === "attempted"
+                  ? "bg-gray-700 py-2 w-[50%] text-center rounded-lg text-white"
+                  : "hover:bg-gray-600 py-2 w-[50%] text-center rounded-lg hover:text-white"
+              }
+            >
+              <button
+                className="w-full"
+                onClick={() => handleQuizType("attempted")}
+              >
                 Attempted
               </button>
             </div>
@@ -77,14 +101,33 @@ export default function QuizPageStudent() {
                   }}
                 >
                   {data?.map((quiz, index) => {
-                    const dt = new Date(quiz.date).toLocaleDateString("en-GB", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    });
+                    const fdc = new Date(quiz.date).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    );
+                    const fdd = new Date(quiz.deadline).toLocaleDateString(
+                      "en-GB",
+                      {
+                        day: "2-digit",
+                        month: "short",
+                        year: "numeric",
+                      }
+                    );
+                    const ftd = new Date(quiz.deadline).toLocaleTimeString(
+                      undefined,
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: true,
+                      }
+                    );
                     return (
                       <div
-                        className="bg-gray-200 rounded-lg p-4 flex items-start gap-2 flex-col"
+                        className="bg-gray-200 rounded-lg p-4 flex items-start gap-2 flex-col min-w-[20rem]"
                         key={index}
                       >
                         <p className="font-bold text-xl">{quiz.title}</p>
@@ -94,7 +137,12 @@ export default function QuizPageStudent() {
                         </p>
                         <p>
                           <span className="font-bold text-xl">created on:</span>{" "}
-                          {dt}
+                          {fdc}
+                        </p>
+                        <p>
+                          <span className="font-bold text-xl">deadline:</span>{" "}
+                          {fdd} {"--"}
+                          {ftd}
                         </p>
                         <div className="flex items-center justify-between w-full">
                           <p>

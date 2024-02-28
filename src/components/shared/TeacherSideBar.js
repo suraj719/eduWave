@@ -12,6 +12,7 @@ import {
 import { Tooltip as ReactToolTip } from "react-tooltip";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 const TeacherSideBar = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
@@ -58,7 +59,7 @@ const TeacherSideBar = () => {
       url: "/dashboard/teacher/leaderboard",
     },
   ];
-
+  const { teacher } = useSelector((state) => state.teacher);
   return (
     <div className="">
       <div

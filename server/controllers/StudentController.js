@@ -88,8 +88,58 @@ const getStudent = async (req, res) => {
     });
   }
 };
+
+const updateStudent = async (req, res) => {
+  // try {
+  //   const student = await Student.findOneAndUpdate(
+  //     { _id: req.body.studentID },
+  //     req.body,
+  //     { new: true }
+  //   );
+  //   if (!student) {
+  //     return res.send({
+  //       message: "Student not found",
+  //       success: false,
+  //     });
+  //   }
+  //   res.status(200).send({
+  //     message: "Student updated successfully",
+  //     success: true,
+  //     data: student,
+  //   });
+  // } catch (error) {
+  //   res.status(500).send({
+  //     message: "something went wrong!!",
+  //     success: false,
+  //   });
+  // }
+  try {
+    const student = await Student.findOneAndUpdate(
+      { _id: req.body.studentID },
+      { $push: { quizs: req.body.quiz } },
+      { new: true }
+    );
+    if (!student) {
+      return res.send({
+        message: "Student not found",
+        success: false,
+      });
+    }
+    res.status(200).send({
+      message: "Student updated successfully",
+      success: true,
+      data: student,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
 module.exports = {
   loginStudent,
   createStudent,
   getStudent,
+  updateStudent,
 };

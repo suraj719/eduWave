@@ -9,6 +9,7 @@ const studentSchema = new mongoose.Schema({
   parentEmail: String,
   parentPhone: String,
   class: String,
+  quizs: mongoose.Schema.Types.Mixed,
 });
 
 module.exports = mongoose.model("students", studentSchema);

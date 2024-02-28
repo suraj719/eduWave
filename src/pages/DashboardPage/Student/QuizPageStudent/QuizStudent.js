@@ -68,27 +68,42 @@ export default function QuizStudent() {
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
+  // const handleSelectOption = (option) => {
+  //   setSelectedOptions({ ...selectedOptions, [index]: option });
+  // };
+
   const handleSelectOption = (option) => {
-    setSelectedOptions({ ...selectedOptions, [index]: option });
+    // Get the current question
+    const currentQuestion = shuffledQuestions[index];
+    // Update the selected option for the current question
+    const updatedQuestion = {
+      ...currentQuestion,
+      selectedOption: option,
+    };
+    // Update the shuffledQuestions state with the updated question
+    const updatedQuestions = [...shuffledQuestions];
+    updatedQuestions[index] = updatedQuestion;
+    setShuffledQuestions(updatedQuestions);
   };
 
   const handleSubmit = () => {
-    setSubmitted(true);
-    let correctCount = 0;
-    shuffledQuestions.forEach((question, i) => {
-      if (selectedOptions[i] === question.answer) {
-        correctCount++;
-      }
-    });
-    setScore(correctCount);
-    const currentAccuracy = (correctCount / shuffledQuestions.length) * 100;
-    const formattedAccuracy = Number.isInteger(currentAccuracy)
-      ? currentAccuracy.toFixed(0)
-      : currentAccuracy.toFixed(2);
-    // setAccuracy(currentAccuracy.toFixed(2));
-    setAccuracy(formattedAccuracy);
+    // console.log(selectedOptions);
+    console.log(shuffledQuestions)
+    // setSubmitted(true);
+    // let correctCount = 0;
+    // shuffledQuestions.forEach((question, i) => {
+    //   if (selectedOptions[i] === question.answer) {
+    //     correctCount++;
+    //   }
+    // });
+    // setScore(correctCount);
+    // const currentAccuracy = (correctCount / shuffledQuestions.length) * 100;
+    // const formattedAccuracy = Number.isInteger(currentAccuracy)
+    //   ? currentAccuracy.toFixed(0)
+    //   : currentAccuracy.toFixed(2);
+    // // setAccuracy(currentAccuracy.toFixed(2));
+    // setAccuracy(formattedAccuracy);
   };
-
   return (
     <>
       {isLoading ? (

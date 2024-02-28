@@ -3,9 +3,13 @@ import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Navbar from "../../../components/shared/Navbar";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../../../redux/alerts";
 
 export default function TeacherRegister() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setMail] = useState("");
@@ -13,6 +17,7 @@ export default function TeacherRegister() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
+      dispatch(ShowLoading());
       setIsLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/teacher/register`,
@@ -33,11 +38,13 @@ export default function TeacherRegister() {
       setIsLoading(false);
       toast.error(error.message);
     }
+    dispatch(HideLoading());
   };
   return (
     <>
-      <div className="bg-black w-full h-full">
-        <div className="flex flex-col items-center h-[90vh] justify-center">
+      <div className="bg-black w-full h-[100vh]">
+        <Navbar />
+        <div className="flex flex-col items-center h-[90%] justify-center">
           <div className="bg-gray-800 px-5 py-10 rounded-xl w-[25rem]">
             <form
               className="flex flex-col items-center"

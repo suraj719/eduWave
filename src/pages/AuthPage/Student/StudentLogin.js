@@ -2,15 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import axios from "axios";
+import Navbar from "../../../components/shared/Navbar";
+import { useDispatch } from "react-redux";
+import { HideLoading, ShowLoading } from "../../../redux/alerts";
 
 export default function StudentLogin() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [password, setPassword] = useState("");
   const [rollNumber, setRollNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+      dispatch(ShowLoading());
       setIsLoading(true);
       const response = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/student/login`,
@@ -32,11 +37,13 @@ export default function StudentLogin() {
       setIsLoading(false);
       toast.error(error.message);
     }
+    dispatch(HideLoading());
   };
   return (
-    <>
-      <div className="bg-black w-full h-full">
-        <div className="flex flex-col items-center h-[90vh] justify-center">
+    <div className="h-[100vh]">
+      <Navbar />
+      <div className="bg-black w-full h-[91%]">
+        <div className="flex flex-col items-center h-full justify-center">
           <div className="bg-gray-800 px-5 py-10 rounded-xl w-[25rem]">
             <form className="flex flex-col items-center" onSubmit={handleLogin}>
               <div className="my-4 font-halloween w-full">
@@ -82,6 +89,6 @@ export default function StudentLogin() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

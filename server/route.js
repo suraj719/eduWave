@@ -3,6 +3,7 @@ const {
   createStudent,
   loginStudent,
   getStudent,
+  updateStudent,
 } = require("./controllers/StudentController");
 const {
   createTeacher,
@@ -31,6 +32,9 @@ router.route("/student/login").post(loginStudent);
 router
   .route("/student/get-student-by-id")
   .post(authMiddlewareStudent, getStudent);
+router
+  .route("/student/update-student")
+  .post(authMiddlewareStudent, updateStudent);
 
 // routes common for both teacher and student
 router.route("/get-all-quiz").get(getAllQuiz);
