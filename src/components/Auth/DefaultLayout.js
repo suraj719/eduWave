@@ -1,8 +1,11 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { SetTeacher } from "../../redux/teachers";
+import { SetStudent } from "../../redux/students";
 export default function DefaultLayout(props) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { teacher } = useSelector((state) => state.teacher);
   const { student } = useSelector((state) => state.student);
   return (
@@ -20,6 +23,8 @@ export default function DefaultLayout(props) {
           <h1
             className="text-white text-small cursor-pointer underline"
             onClick={() => {
+              dispatch(SetTeacher(null))
+              dispatch(SetStudent(null))
               localStorage.removeItem("token");
               navigate("/auth");
             }}

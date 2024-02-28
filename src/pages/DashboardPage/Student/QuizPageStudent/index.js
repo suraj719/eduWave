@@ -11,6 +11,7 @@ export default function QuizPageStudent() {
   const [quizType, setQuizType] = useState("online");
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
+  const [tempData, setTempData] = useState([]);
   const fetchData = async () => {
     try {
       dispatch(ShowLoading());
@@ -20,9 +21,10 @@ export default function QuizPageStudent() {
       dispatch(HideLoading());
       if (response.data.success) {
         const filteredQuizzes = response.data.data.filter(
-          (quiz) => quiz.class === student.class
+          (quiz) => quiz.class === student.class && new Date(quiz.deadline) > new Date()
         );
         setData(filteredQuizzes);
+        setTempData(response.data.data);
       } else {
         toast.error(response.data.message);
       }
@@ -34,19 +36,32 @@ export default function QuizPageStudent() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const handleQuizType = (qtype) => {};
+  const handleQuizType = (qtype) => {
+    if (qtype === "online") {
+      setQuizType("online");
+      const filteredQuizzes = tempData.filter(
+        (quiz) => new Date(quiz.deadline) > new Date()
+      );
+      setData(filteredQuizzes);
+    } else if (qtype === "attempted") {
+      setQuizType("attempted");
+      const filteredQuizzes = tempData.filter(
+        (quiz) => quiz.isAttempted === true
+      );
+      setData(filteredQuizzes);
+    }
+  };
   return (
     <>
       <div className="flex gap-9">
         <StudentSideBar />
         <div className="w-full p-4">
           <div className="bg-gray-200 rounded-lg p-2 text-gray-800  flex gap-8 justify-evenly text-xl mb-4">
-            <div>
-              <button onClick={() => handleQuizType("online")}>Online</button>
+            <div className={quizType === "online" ? "bg-gray-700 w-[50%] text-center rounded-lg text-white" : "hover:bg-gray-600 w-[50%] text-center rounded-lg hover:text-white"}>
+              <button className="w-full" onClick={() => handleQuizType("online")}>Online</button>
             </div>
-            <div>
-              <button onClick={() => handleQuizType("attempted")}>
+            <div className={quizType === "attempted" ? "bg-gray-700 w-[50%] text-center rounded-lg text-white" : "hover:bg-gray-600 w-[50%] text-center rounded-lg hover:text-white"}>
+              <button className="w-full" onClick={() => handleQuizType("attempted")}>
                 Attempted
               </button>
             </div>
@@ -104,7 +119,7 @@ export default function QuizPageStudent() {
             </>
           ) : (
             <>
-              <div className="flex flex-col text-white items-center justify-center h-full">
+              <div className="flex flex-col text-white items-center justify-center h-[70vh]">
                 <p className="text-2xl">There are no quizes available...</p>
               </div>
             </>

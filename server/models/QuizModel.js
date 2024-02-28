@@ -24,6 +24,10 @@ const quizSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     required: true,
   },
+  deadline: {
+    type: String,
+    required: true
+  }
 });
 
 module.exports = mongoose.model("quizs", quizSchema);

@@ -17,6 +17,7 @@ export default function GenerateQuiz() {
   const [questions, setQuestions] = useState([]);
   const [background, setBackground] = useState("");
   const [quizClass, setQuizClass] = useState("");
+  const [deadline, setDeadline] = useState();
   // Function to add a question
   const addQuestion = () => {
     setQuestions([
@@ -76,6 +77,7 @@ export default function GenerateQuiz() {
         class: quizClass,
         title: quizTitle,
         quiz: quizData,
+        deadline: deadline,
       };
       let response = null;
       response = await axios.post(
@@ -170,6 +172,16 @@ export default function GenerateQuiz() {
                   <option value={9}>9th class</option>
                   <option value={10}>10th class</option>
                 </select> */}
+              </div>
+              <div>
+                <label className="text-white">deadline of the quiz*: </label>
+                <input
+                  className="outline-none rounded-lg px-2 py-1 w-full"
+                  type="datetime-local"
+                  value={deadline}
+                  onChange={(e) => setDeadline(e.target.value)}
+                  required
+                />
               </div>
               <div>
                 <button
