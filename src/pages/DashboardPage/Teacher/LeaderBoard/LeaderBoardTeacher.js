@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import toast from "react-hot-toast";
-import StudentSideBar from "../../../../components/shared/StudentSideBar";
+import TeacherSideBar from "../../../../components/shared/TeacherSideBar";
 import { HideLoading, ShowLoading } from "../../../../redux/alerts";
 
-export default function LeaderBoardStudent() {
+export default function LeaderBoardTeacher() {
   const dispatch = useDispatch();
-  const { student } = useSelector((state) => state.student);
   const [students, setStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   useEffect(() => {
@@ -18,9 +17,8 @@ export default function LeaderBoardStudent() {
           `${process.env.REACT_APP_BACKEND_URL}/api/get-students`
         );
         if (response.data.success) {
-          // Filter students based on the same class as the logged-in student
           const filteredStudents = response.data.data.filter(
-            (std) => std.class === student.class && std?.quizs?.length > 0 // Filter only students who have attempted quizzes
+            (std) => std?.quizs?.length > 0 // Filter only students who have attempted quizzes
           );
           // Sort students based on total score in descending order
           filteredStudents.sort((a, b) => b.averageScore - a.averageScore);
@@ -34,9 +32,8 @@ export default function LeaderBoardStudent() {
       }
       dispatch(HideLoading());
     };
-
     fetchStudents();
-  }, [student.class]);
+  }, []);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -49,7 +46,7 @@ export default function LeaderBoardStudent() {
   return (
     <>
       <div className="flex">
-        <StudentSideBar />
+        <TeacherSideBar />
         <div>
           <main className="">
             <div className="p-2 relative">
@@ -98,14 +95,17 @@ export default function LeaderBoardStudent() {
                           Name
                         </td>
                         <td className="p-2 border-r-2 border-r-gray-300">
+                          Class
+                        </td>
+                        <td className="p-2 border-r-2 border-r-gray-300">
                           No.of quizes participated
                         </td>
                         <td className="p-2 border-r-2 border-r-gray-300 max-w-[150px]">
                           Average accuracy
                         </td>
-                        {/* <td className="p-2 border-r-2 border-r-gray-300 max-w-[150px]">
+                        <td className="p-2 border-r-2 border-r-gray-300 max-w-[150px]">
                           Average score
-                        </td> */}
+                        </td>
                         <td className="rounded-tr-lg p-4 max-w-[150px]">
                           Total score
                         </td>
@@ -124,14 +124,17 @@ export default function LeaderBoardStudent() {
                             {std.name}
                           </td>
                           <td className="border border-gray-300">
+                            {std.class}
+                          </td>
+                          <td className="border border-gray-300">
                             {std.quizs.length}
                           </td>
                           <td className="border border-gray-300 max-w-[150px]">
                             {std?.averageAccuracy}%
                           </td>
-                          {/* <td className="border border-gray-300 max-w-[150px]">
+                          <td className="border border-gray-300 max-w-[150px]">
                             {std?.averageScore}
-                          </td> */}
+                          </td>
                           <td className="border border-gray-300 max-w-[150px]">
                             {std?.totalScore} /{" "}
                             {std.quizs.reduce(

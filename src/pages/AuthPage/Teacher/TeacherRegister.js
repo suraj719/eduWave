@@ -13,6 +13,7 @@ export default function TeacherRegister() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setMail] = useState("");
+  const [subject, setSubject] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -25,6 +26,7 @@ export default function TeacherRegister() {
           name: name,
           email: email,
           password: password,
+          subject: subject,
         }
       );
       setIsLoading(false);
@@ -56,6 +58,15 @@ export default function TeacherRegister() {
                   onChange={(e) => setName(e.target.value)}
                   className="rounded-md text-2xl font-bold outline-none p-2 w-full"
                   placeholder="Full Name"
+                  required
+                />
+              </div>
+              <div className="mt-4 font-halloween w-full">
+                <input
+                  type="text"
+                  onChange={(e) => setSubject(e.target.value)}
+                  className="rounded-md text-2xl font-bold outline-none p-2 w-full"
+                  placeholder="Subject"
                   required
                 />
               </div>

@@ -92,30 +92,88 @@ const getStudent = async (req, res) => {
 const updateStudentQuiz = async (req, res) => {
   try {
     const { user, ...restData } = req.body.quiz;
-    const student = await Student.findOneAndUpdate(
+
+    // Update the student document with the new quiz attempt
+    const updatedStudent = await Student.findByIdAndUpdate(
       { _id: req.body.studentID },
       { $push: { quizs: restData } },
       { new: true }
     );
-    await Quiz.findOneAndUpdate(
+
+    // Update the quiz document with the new attempt
+    await Quiz.findByIdAndUpdate(
       { _id: req.body.quiz._id },
       { $push: { attempts: req.body.quiz } },
       { new: true }
     );
-    if (!student) {
-      return res.send({
-        message: "Student not found",
-        success: false,
-      });
+
+    // Calculate average accuracy, average score, and total score for the student
+    const totalAttempts = updatedStudent.quizs.length;
+    const totalScore = updatedStudent.quizs.reduce(
+      (acc, q) => acc + Number(q.score),
+      0
+    );
+
+    // Calculate total accuracy and handle rounding if necessary
+    let totalAccuracy = updatedStudent.quizs.reduce(
+      (acc, q) => acc + Number(q.accuracy),
+      0
+    );
+
+    // Determine if the total accuracy is an integer or a decimal
+    if (Number.isInteger(totalAccuracy)) {
+      totalAccuracy = Math.round(totalAccuracy);
+    } else {
+      // If it's a decimal, round it to two decimal places
+      totalAccuracy = Number(totalAccuracy.toFixed(2));
     }
+
+    // Calculate average score and average accuracy
+    let averageScore = totalScore / totalAttempts;
+    let averageAccuracy = totalAccuracy / totalAttempts;
+
+    // Round the average score to ensure it's an integer if it's a whole number
+    if (Number.isInteger(averageScore)) {
+      averageScore = Math.round(averageScore);
+    } else {
+      // If it's a decimal, round it to two decimal places
+      averageScore = Number(averageScore.toFixed(2));
+    }
+
+    // Round the average accuracy to two decimal places if it's a decimal number
+    averageAccuracy = Number(averageAccuracy.toFixed(2));
+
+    // Update the student document with the calculated values
+    await Student.findByIdAndUpdate(
+      { _id: req.body.studentID },
+      { $set: { averageScore, averageAccuracy, totalScore } },
+      { new: true }
+    );
+
     res.status(200).send({
       message: "Student updated successfully",
+      success: true,
+      data: updatedStudent,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
+const getAllStudents = async (req, res) => {
+  try {
+    const student = await Student.find();
+    res.status(200).send({
+      message: "students retrieved successfully",
       success: true,
       data: student,
     });
   } catch (error) {
     res.status(500).send({
-      message: error.message,
+      message: "something went wrong!",
       success: false,
     });
   }
@@ -125,4 +183,5 @@ module.exports = {
   createStudent,
   getStudent,
   updateStudentQuiz,
+  getAllStudents,
 };

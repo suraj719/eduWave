@@ -72,7 +72,7 @@ export default function GenerateQuiz() {
       dispatch(ShowLoading());
       const dat = {
         createdBy: teacher,
-        subject: "GK",
+        subject: teacher?.subject || "General trivia",
         date: new Date(),
         class: quizClass,
         title: quizTitle,
@@ -92,7 +92,7 @@ export default function GenerateQuiz() {
       dispatch(HideLoading());
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate("/dashboard/teacher");
+        navigate("/dashboard/teacher/all-quiz");
       } else {
         toast.error(response.data.message);
       }

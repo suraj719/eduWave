@@ -8,42 +8,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { ShowLoading, HideLoading } from "../../redux/alerts";
 import { useParams } from "react-router";
 
-export default function QuizPage() {
+export default function QuizPage({ questions }) {
   const { id } = useParams();
   const { teacher } = useSelector((state) => state.teacher);
   const dispatch = useDispatch();
-  const [questions, setQuestions] = useState([]);
-  const [data, setData] = useState();
+  // const [questions, setQuestions] = useState([]);
+  const [data, setData] = useState(questions);
   const [accuracy, setAccuracy] = useState();
-  const fetchData = async () => {
-    try {
-      dispatch(ShowLoading());
-      const response = await axios.get(
-        `${process.env.REACT_APP_BACKEND_URL}/api/quiz/${id}`
-      );
-      dispatch(HideLoading());
-      if (response.data.success) {
-        console.log(response.data);
-        setData(response.data.data);
-        setQuestions(response.data.data.quiz);
-        try {
-          setShuffledQuestions(
-            shuffleQuestions(response.data.data.quiz.questions)
-          );
-          // console.log(shuffledQuestions);
-          setIsLoading(false);
-        } catch (error) {}
-      } else {
-        toast.error(response.data.message);
-      }
-    } catch (error) {
-      dispatch(HideLoading());
-      toast.error(error.message);
-    }
-  };
-  useEffect(() => {
-    fetchData();
-  }, []);
+
   function shuffleArray(array) {
     // Create a copy of the array to avoid mutating the original array
     const newArray = array.slice();
@@ -69,10 +41,10 @@ export default function QuizPage() {
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
   const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
-  // useEffect(() => {
-  //   setShuffledQuestions(shuffleQuestions(questions.questions));
-  //   setIsLoading(false); // Set loading to false once shuffling is done
-  // }, []);
+  useEffect(() => {
+    setShuffledQuestions(shuffleQuestions(questions.questions));
+    setIsLoading(false); // Set loading to false once shuffling is done
+  }, []);
 
   const handleSelectOption = (option) => {
     setSelectedOptions({ ...selectedOptions, [index]: option });
@@ -103,7 +75,7 @@ export default function QuizPage() {
         <>
           {questions ? (
             <div className="flex flex-col items-center justify-center h-[90vh]">
-              <p className="text-white text-xl">{data.title}</p>
+              {/* <p className="text-white text-xl">{questions.title}</p> */}
               <div
                 className="rounded-xl flex items-center justify-center w-[55vw] h-[70vh]"
                 style={{

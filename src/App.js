@@ -25,6 +25,8 @@ import StudentDashboard from "./pages/DashboardPage/Student/StudentDashboard";
 import QuizPageStudent from "./pages/DashboardPage/Student/QuizPageStudent";
 import QuizStudent from "./pages/DashboardPage/Student/QuizPageStudent/QuizStudent";
 import LeaderBoardStudent from "./pages/DashboardPage/Student/LeaderBoard/LeaderBoardStudent";
+import LeaderBoardTeacher from "./pages/DashboardPage/Teacher/LeaderBoard/LeaderBoardTeacher";
+import CanvasStudent from "./pages/DashboardPage/Student/Canvas";
 // import Stars from "./components/Stars/Stars";
 
 function App() {
@@ -149,7 +151,23 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
-        <Route path="/quiz/:id" element={<QuizPage />} />
+        <Route
+          path="/dashboard/teacher/leaderboard"
+          element={
+            <ProtectedTeacherRoute>
+              <LeaderBoardTeacher />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/canvas"
+          element={
+            <ProtectedStudentRoute>
+              <CanvasStudent />
+            </ProtectedStudentRoute>
+          }
+        />
+        {/* <Route path="/quiz/:id" element={<QuizPage />} /> */}
         {/* <Route path="/preview/:quizTitle" element={<PreviewQuiz />} /> */}
         {/* <Route path="/dashboard/teacher" element={<TeacherDashboard />} /> */}
         {/* <Route path="/quiz" element={<QuizPageTeacher />} /> */}

@@ -4,6 +4,7 @@ const {
   loginStudent,
   getStudent,
   updateStudentQuiz,
+  getAllStudents,
 } = require("./controllers/StudentController");
 const {
   createTeacher,
@@ -37,6 +38,7 @@ router
   .post(authMiddlewareStudent, updateStudentQuiz);
 
 // routes common for both teacher and student
+router.route("/get-students").get(getAllStudents);
 router.route("/get-all-quiz").get(getAllQuiz);
 router.route("/quiz/:quizID").get(getQuiz);
 module.exports = router;

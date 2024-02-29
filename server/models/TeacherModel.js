@@ -4,6 +4,7 @@ const TeacherSchema = new mongoose.Schema({
   name: String,
   email: String,
   password: String,
+  subject: String,
   isApproved: {
     type: Boolean,
     default: false,

@@ -23,8 +23,20 @@ export default function DefaultLayout(props) {
           <h1
             className="text-white text-small cursor-pointer underline"
             onClick={() => {
-              dispatch(SetTeacher(null))
-              dispatch(SetStudent(null))
+              if (teacher) {
+                navigate("/dashboard/teacher");
+              } else if (student) {
+                navigate("/dashboard/student");
+              }
+            }}
+          >
+            Dashboard
+          </h1>
+          <h1
+            className="text-white text-small cursor-pointer underline"
+            onClick={() => {
+              dispatch(SetTeacher(null));
+              dispatch(SetStudent(null));
               localStorage.removeItem("token");
               navigate("/auth");
             }}

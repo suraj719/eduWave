@@ -42,7 +42,7 @@ export default function StudentLogin() {
   return (
     <div className="h-[100vh]">
       <Navbar />
-      <div className="bg-black w-full h-[91%]">
+      <div className="bg-black w-full h-[90%]">
         <div className="flex flex-col items-center h-full justify-center">
           <div className="bg-gray-800 px-5 py-10 rounded-xl w-[25rem]">
             <form className="flex flex-col items-center" onSubmit={handleLogin}>

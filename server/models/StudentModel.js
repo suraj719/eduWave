@@ -10,6 +10,9 @@ const studentSchema = new mongoose.Schema({
   parentPhone: String,
   class: String,
   quizs: mongoose.Schema.Types.Mixed,
+  averageScore: Number,
+  averageAccuracy: Number,
+  totalScore: Number,
 });
 
 module.exports = mongoose.model("students", studentSchema);
