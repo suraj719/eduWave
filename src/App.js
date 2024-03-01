@@ -29,27 +29,30 @@ import EMeetStudent from "./pages/DashboardPage/Student/EMeet";
 import Stars from "./components/Stars/Stars";
 import { useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
+import ChatStudent from "./pages/DashboardPage/Student/Chat";
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
+import AddResource from "./pages/DashboardPage/Teacher/AddResource";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const location = useLocation();
   const isStudentRoute = location.pathname.includes("/dashboard/student");
-
+  const isQuizRoute = location.pathname.includes("/quiz/student");
   useEffect(() => {
-    const handleBeforeUnload = (event) => {
-      event.preventDefault();
-      event.returnValue = ""; // Some browsers require this line.
-      return ""; // For others.
-    };
-    window.addEventListener("blur", () => {
-      alert("Don't forget about your goals !! study hard soldier !!");
-    });
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    // const handleBeforeUnload = (event) => {
+    //   event.preventDefault();
+    //   event.returnValue = ""; // Some browsers require this line.
+    //   return ""; // For others.
+    // };
+    // window.addEventListener("blur", () => {
+    //   alert("Don't forget about your goals !! study hard soldier !!");
+    // });
+    // window.addEventListener("beforeunload", handleBeforeUnload);
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     document.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
+      // window.removeEventListener("beforeunload", handleBeforeUnload);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
       document.removeEventListener("keydown", handleKeyDown);
     };
@@ -82,6 +85,11 @@ function App() {
     //     document.exitFullscreen();
     //   }
     // }
+  };
+  const [isChatOpen, setIsChatOpen] = useState(false); // State to manage chat visibility
+
+  const toggleChat = () => {
+    setIsChatOpen((prevState) => !prevState); // Toggle chat visibility
   };
   return (
     <>
@@ -252,7 +260,30 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
+        <Route path="/chat" element={<ChatStudent />} />
+        <Route
+          path="/dashboard/teacher/resources"
+          element={
+            <ProtectedTeacherRoute>
+              <AddResource />
+            </ProtectedTeacherRoute>
+          }
+        />
       </Routes>
+      {isStudentRoute && !isQuizRoute && (
+        <>
+          <div className="fixed bottom-8 right-8 z-50">
+            {isChatOpen && <ChatStudent />}
+
+            <div
+              className="flex items-center justify-center w-12 h-12 bg-blue-500 rounded-full shadow-lg cursor-pointer flex-shrink-0"
+              onClick={toggleChat}
+            >
+              <ChatBubbleOvalLeftEllipsisIcon />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

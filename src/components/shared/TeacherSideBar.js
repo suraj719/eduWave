@@ -8,6 +8,7 @@ import {
   PencilIcon,
   ChatBubbleBottomCenterIcon,
   QuestionMarkCircleIcon,
+  BookOpenIcon,
 } from "@heroicons/react/24/solid";
 import { Tooltip as ReactToolTip } from "react-tooltip";
 import { useLocation } from "react-router";
@@ -21,10 +22,15 @@ const TeacherSideBar = () => {
       src: <HomeIcon className="h-6 w-6 text-yellow-400" />,
       url: "/dashboard/teacher",
     },
+    // {
+    //   title: "Inbox",
+    //   src: <ChatBubbleBottomCenterIcon className="h-6 w-6 text-green-400" />,
+    //   url: "/dashboard/teacher/inbox",
+    // },
     {
-      title: "Inbox",
-      src: <ChatBubbleBottomCenterIcon className="h-6 w-6 text-green-400" />,
-      url: "/dashboard/teacher/inbox",
+      title: "Resources",
+      src: <BookOpenIcon className="h-6 w-6 text-green-400" />,
+      url: "/dashboard/teacher/resources",
     },
     {
       title: "Students",
