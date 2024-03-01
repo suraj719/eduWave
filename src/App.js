@@ -1,15 +1,11 @@
 import { Route, Routes, useLocation } from "react-router";
 import "./App.css";
-import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
-import Navbar from "./components/shared/Navbar";
 import AuthPage from "./pages/AuthPage";
 import Canvas from "./pages/DashboardPage/Teacher/CanvasPage";
 import GenerateQuiz from "./pages/DashboardPage/Teacher/GenerateQuizPage";
 import PreviewQuiz from "./pages/DashboardPage/Teacher/GenerateQuizPage/PreviewQuiz";
 import HomePage from "./pages/HomePage";
-import QuizPage from "./pages/QuizPage";
-import Loader from "./components/Loaders/Loader";
 import PublicRoute from "./components/Auth/PublicRoute";
 import TeacherRegister from "./pages/AuthPage/Teacher/TeacherRegister";
 import TeacherLogin from "./pages/AuthPage/Teacher/TeacherLogin";
@@ -18,7 +14,6 @@ import ProtectedTeacherRoute from "./components/Auth/ProtectedTeacherRoute";
 import TeacherDashboard from "./pages/DashboardPage/Teacher/TeacherDashboard";
 import AddStudent from "./pages/DashboardPage/Teacher/AddStudent";
 import QuizPageTeacher from "./pages/DashboardPage/Teacher/QuizPageTeacher";
-import LeaderBoardPage from "./pages/LeaderBoardPage";
 import ProtectedStudentRoute from "./components/Auth/ProtectedStudentRoute";
 import StudentLogin from "./pages/AuthPage/Student/StudentLogin";
 import StudentDashboard from "./pages/DashboardPage/Student/StudentDashboard";
@@ -33,6 +28,7 @@ import StudentRoom from "./pages/DashboardPage/Student/EMeet/StudentRoom";
 import EMeetStudent from "./pages/DashboardPage/Student/EMeet";
 import Stars from "./components/Stars/Stars";
 import { useEffect, useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -41,14 +37,32 @@ function App() {
   const isStudentRoute = location.pathname.includes("/dashboard/student");
 
   useEffect(() => {
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ""; // Some browsers require this line.
+      return ""; // For others.
+    };
+    window.addEventListener("blur", () => {
+      alert("Don't forget about your goals !! study hard soldier !!");
+    });
+    window.addEventListener("beforeunload", handleBeforeUnload);
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     document.addEventListener("keydown", handleKeyDown);
     return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+  useEffect(() => {
+    if (isFullScreen && isStudentRoute) {
+      const intervalId = setInterval(() => {
+        toast("Take a short break");
+      }, 30000);
 
+      return () => clearInterval(intervalId);
+    }
+  }, [isFullScreen, isStudentRoute]);
   const handleFullScreenChange = () => {
     setIsFullScreen(!!document.fullscreenElement);
   };
@@ -62,11 +76,12 @@ function App() {
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen();
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
     }
+    // else {
+    //   if (document.exitFullscreen) {
+    //     document.exitFullscreen();
+    //   }
+    // }
   };
   return (
     <>
@@ -237,13 +252,7 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
-        {/* <Route path="/quiz/:id" element={<QuizPage />} /> */}
-        {/* <Route path="/preview/:quizTitle" element={<PreviewQuiz />} /> */}
-        {/* <Route path="/dashboard/teacher" element={<TeacherDashboard />} /> */}
-        {/* <Route path="/quiz" element={<QuizPageTeacher />} /> */}
-        <Route path="/leaderboard" element={<LeaderBoardPage />} />
       </Routes>
-      {/* <Stars /> */}
     </>
   );
 }
