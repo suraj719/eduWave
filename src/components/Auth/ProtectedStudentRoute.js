@@ -10,7 +10,18 @@ function ProtectedStudentRoute(props) {
   const navigate = useNavigate();
   const [readyToRednder, setReadyToRednder] = React.useState(false);
   const dispatch = useDispatch();
-
+  const enableFullScreen = () => {
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  };
   const geEmployeeData = async () => {
     try {
       dispatch(ShowLoading());
@@ -38,6 +49,7 @@ function ProtectedStudentRoute(props) {
 
   useEffect(() => {
     geEmployeeData();
+    // enableFullScreen();
   }, []);
 
   return readyToRednder && <DefaultLayout>{props.children}</DefaultLayout>;

@@ -9,6 +9,7 @@ const TeacherSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  tasks: mongoose.Schema.Types.Mixed,
 });
 
 module.exports = mongoose.model("teachers", TeacherSchema);

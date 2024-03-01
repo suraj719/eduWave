@@ -96,8 +96,42 @@ const getTeacher = async (req, res) => {
   }
 };
 
+const updateTasksTeacher = async (req, res) => {
+  try {
+    const { teacherID, tasks } = req.body;
+
+    // Find the teacher by ID
+    const teacher = await Teacher.findById(teacherID);
+
+    if (!teacher) {
+      return res.status(404).send({
+        message: "Teacher not found",
+        success: false,
+      });
+    }
+
+    // Update the teacher's tasks
+    teacher.tasks = tasks;
+
+    // Save the updated teacher document
+    await teacher.save();
+
+    res.status(200).send({
+      message: "Tasks updated successfully",
+      success: true,
+      data: teacher,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   loginTeacher,
   createTeacher,
   getTeacher,
+  updateTasksTeacher,
 };

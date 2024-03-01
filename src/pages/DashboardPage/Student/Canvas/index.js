@@ -125,8 +125,8 @@ export default function CanvasStudent() {
               <button onClick={getPen}>
                 <p>Draw</p>
               </button>
-              <div className="btn-width color">
-                <label>Brush color: </label>
+              <div className="">
+                <span>Brush color: </span>
                 <input
                   className="w-[5rem] bg-gray-700"
                   type="color"
@@ -135,7 +135,7 @@ export default function CanvasStudent() {
                 />
               </div>
               <div>
-                <label>Brush size: </label>
+                <span>Brush size: </span>
                 <select
                   className="btn-width bg-gray-700"
                   value={size}

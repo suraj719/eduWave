@@ -12,6 +12,18 @@ export default function StudentLogin() {
   const [password, setPassword] = useState("");
   const [rollNumber, setRollNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const enableFullScreen = () => {
+    const element = document.documentElement;
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.mozRequestFullScreen) {
+      element.mozRequestFullScreen();
+    } else if (element.webkitRequestFullscreen) {
+      element.webkitRequestFullscreen();
+    } else if (element.msRequestFullscreen) {
+      element.msRequestFullscreen();
+    }
+  };
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -27,6 +39,7 @@ export default function StudentLogin() {
       setIsLoading(false);
       if (response.data.success) {
         toast.success(response.data.message);
+        // enableFullScreen();
         localStorage.setItem("token", response.data.data);
         localStorage.setItem("type", "student");
         navigate("/dashboard/student");

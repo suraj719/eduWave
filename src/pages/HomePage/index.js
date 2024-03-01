@@ -1,12 +1,30 @@
 import React from "react";
-import Navbar from "../../components/shared/Navbar";
+import Typewriter from "typewriter-effect";
+import { Link } from "react-router-dom";
+import Stars from "../../components/Stars/Stars";
 
 export default function HomePage() {
   return (
     <>
-      <Navbar />
-      <div>
-        <p className="text-white">HELLLOOOOS</p>
+      <div className="bg-black w-[100vw] h-[100vh]">
+        <Stars />
+        <div className="flex flex-col items-center h-[90vh] justify-center">
+          <p className="text-8xl font-bold font-str text-white">EduWave</p>
+          <div className="text-white font-halloween text-2xl">
+            <Typewriter
+              options={{
+                strings: "Tailoring education for success",
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </div>
+          <Link to="/auth">
+            <button className="border border-white font-bold text-xl hover:bg-gray-800 text-white px-8 py-3 mt-8">
+              Get started
+            </button>
+          </Link>
+        </div>
       </div>
     </>
   );

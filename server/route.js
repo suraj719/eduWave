@@ -5,11 +5,13 @@ const {
   getStudent,
   updateStudentQuiz,
   getAllStudents,
+  updateTasksStudent,
 } = require("./controllers/StudentController");
 const {
   createTeacher,
   loginTeacher,
   getTeacher,
+  updateTasksTeacher,
 } = require("./controllers/TeacherController");
 const authMiddlewareTeacher = require("./middlewares/authMiddlewareTeacher");
 const authMiddlewareStudent = require("./middlewares/authMiddlewareStudent");
@@ -28,6 +30,9 @@ router
   .post(authMiddlewareTeacher, getTeacher);
 router.route("/teacher/add-student").post(authMiddlewareTeacher, createStudent);
 router.route("/teacher/add-quiz").post(authMiddlewareTeacher, createQuiz);
+router
+  .route("/teacher/update-task")
+  .post(authMiddlewareTeacher, updateTasksTeacher);
 // routes for student
 router.route("/student/login").post(loginStudent);
 router
@@ -36,6 +41,9 @@ router
 router
   .route("/student/update-student")
   .post(authMiddlewareStudent, updateStudentQuiz);
+router
+  .route("/student/update-task")
+  .post(authMiddlewareStudent, updateTasksStudent);
 
 // routes common for both teacher and student
 router.route("/get-students").get(getAllStudents);

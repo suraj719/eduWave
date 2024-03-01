@@ -101,7 +101,11 @@ export default function GenerateQuiz() {
       toast.error(error.message);
     }
   };
-
+  const deleteQuestion = (index) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions.splice(index, 1);
+    setQuestions(updatedQuestions);
+  };
   const handlePreview = () => {
     // Check if quiz title is provided
     if (quizTitle.trim() !== "") {
@@ -154,31 +158,14 @@ export default function GenerateQuiz() {
                   onChange={(e) => setQuizClass(e.target.value)}
                   required
                 />
-                {/* <select
-                  className="w-full rounded-lg px-2 py-1"
-                  onChange={(e) => setQuizClass(e.target.value)}
-                >
-                  <option value="" disabled>
-                    select class
-                  </option>
-                  <option value={1}>1st class</option>
-                  <option value={2}>2nd class</option>
-                  <option value={3}>3rd class</option>
-                  <option value={4}>4th class</option>
-                  <option value={5}>5th class</option>
-                  <option value={6}>6th class</option>
-                  <option value={7}>7th class</option>
-                  <option value={8}>8th class</option>
-                  <option value={9}>9th class</option>
-                  <option value={10}>10th class</option>
-                </select> */}
               </div>
               <div>
                 <label className="text-white">deadline of the quiz*: </label>
                 <input
-                  className="outline-none rounded-lg px-2 py-1 w-full"
+                  className="outline-none rounded-lg px-2 py-1 w-full z-10"
                   type="datetime-local"
-                  value={deadline}
+                  // value={deadline}
+                  min={new Date().toISOString().split(".")[0]}
                   onChange={(e) => setDeadline(e.target.value)}
                   required
                 />
@@ -271,6 +258,12 @@ export default function GenerateQuiz() {
                   onClick={() => addOption(index)}
                 >
                   Add option
+                </button>
+                <button
+                  className="float-right text-white bg-red-500 p-2 rounded-lg hover:bg-red-600"
+                  onClick={() => deleteQuestion(index)}
+                >
+                  Delete question
                 </button>
               </div>
             ))}

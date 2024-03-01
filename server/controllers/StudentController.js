@@ -178,10 +178,45 @@ const getAllStudents = async (req, res) => {
     });
   }
 };
+
+const updateTasksStudent = async (req, res) => {
+  try {
+    const { studentID, tasks } = req.body;
+
+    // Find the student by ID
+    const student = await Student.findById(studentID);
+
+    if (!student) {
+      return res.status(404).send({
+        message: "Student not found",
+        success: false,
+      });
+    }
+
+    // Update the student's tasks
+    student.tasks = tasks;
+
+    // Save the updated student document
+    await student.save();
+
+    res.status(200).send({
+      message: "Tasks updated successfully",
+      success: true,
+      data: student,
+    });
+  } catch (error) {
+    res.status(500).send({
+      message: error.message,
+      success: false,
+    });
+  }
+};
+
 module.exports = {
   loginStudent,
   createStudent,
   getStudent,
   updateStudentQuiz,
   getAllStudents,
+  updateTasksStudent,
 };

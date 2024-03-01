@@ -13,6 +13,7 @@ const studentSchema = new mongoose.Schema({
   averageScore: Number,
   averageAccuracy: Number,
   totalScore: Number,
+  tasks: mongoose.Schema.Types.Mixed,
 });
 
 module.exports = mongoose.model("students", studentSchema);

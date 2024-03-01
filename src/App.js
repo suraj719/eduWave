@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -27,14 +27,52 @@ import QuizStudent from "./pages/DashboardPage/Student/QuizPageStudent/QuizStude
 import LeaderBoardStudent from "./pages/DashboardPage/Student/LeaderBoard/LeaderBoardStudent";
 import LeaderBoardTeacher from "./pages/DashboardPage/Teacher/LeaderBoard/LeaderBoardTeacher";
 import CanvasStudent from "./pages/DashboardPage/Student/Canvas";
-// import Stars from "./components/Stars/Stars";
+import EMeetTeacher from "./pages/DashboardPage/Teacher/EMeet";
+import TeacherRoom from "./pages/DashboardPage/Teacher/EMeet/TeacherRoom";
+import StudentRoom from "./pages/DashboardPage/Student/EMeet/StudentRoom";
+import EMeetStudent from "./pages/DashboardPage/Student/EMeet";
+import Stars from "./components/Stars/Stars";
+import { useEffect, useState } from "react";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const location = useLocation();
+  const isStudentRoute = location.pathname.includes("/dashboard/student");
+
+  useEffect(() => {
+    document.addEventListener("fullscreenchange", handleFullScreenChange);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullScreenChange);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleFullScreenChange = () => {
+    setIsFullScreen(!!document.fullscreenElement);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "f") {
+      toggleFullScreen();
+    }
+  };
+
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
   return (
     <>
-      {loading ? <Spinner /> : null}
+      {loading || (isStudentRoute && !isFullScreen) ? <Spinner /> : null}
       <Toaster />
+      <Stars />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
@@ -164,6 +202,38 @@ function App() {
           element={
             <ProtectedStudentRoute>
               <CanvasStudent />
+            </ProtectedStudentRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher/emeet"
+          element={
+            <ProtectedTeacherRoute>
+              <EMeetTeacher />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher/meet/:roomID"
+          element={
+            <ProtectedTeacherRoute>
+              <TeacherRoom />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/emeet"
+          element={
+            <ProtectedStudentRoute>
+              <EMeetStudent />
+            </ProtectedStudentRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/meet/:roomID"
+          element={
+            <ProtectedStudentRoute>
+              <StudentRoom />
             </ProtectedStudentRoute>
           }
         />
