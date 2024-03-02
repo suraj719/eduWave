@@ -13,7 +13,6 @@
     "@zegocloud/zego-uikit-prebuilt": "^1.11.0",
     "axios": "^1.6.7",
     "firebase": "^10.8.1",
-    "nodemailer": "^6.9.11",
     "react": "^18.2.0",
     "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
@@ -24,6 +23,7 @@
     "react-router-dom": "^6.22.1",
     "react-scripts": "5.0.1",
     "react-tooltip": "^5.26.3",
+    "recharts": "^2.12.2",
     "typewriter-effect": "^2.21.0",
     "uuid": "^9.0.1",
     "web-vitals": "^2.1.4"

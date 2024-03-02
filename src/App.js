@@ -33,6 +33,7 @@ import ChatStudent from "./pages/DashboardPage/Student/Chat";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import AddResource from "./pages/DashboardPage/Teacher/AddResource";
 import Resources from "./pages/DashboardPage/Student/Resources";
+import StatisticsStudent from "./pages/DashboardPage/Student/Statistics";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -275,6 +276,14 @@ function App() {
           element={
             <ProtectedStudentRoute>
               <Resources />
+            </ProtectedStudentRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/statistics"
+          element={
+            <ProtectedStudentRoute>
+              <StatisticsStudent />
             </ProtectedStudentRoute>
           }
         />

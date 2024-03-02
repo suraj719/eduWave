@@ -53,11 +53,11 @@ const TeacherSideBar = () => {
       src: <VideoCameraIcon className="h-6 w-6 text-blue-400" />,
       url: "/dashboard/teacher/emeet",
     },
-    {
-      title: "Statistics",
-      src: <ChartPieIcon className="h-6 w-6 text-green-400" />,
-      url: "/dashboard/teacher/statistics",
-    },
+    // {
+    //   title: "Statistics",
+    //   src: <ChartPieIcon className="h-6 w-6 text-green-400" />,
+    //   url: "/dashboard/teacher/statistics",
+    // },
     {
       title: "LeaderBoard",
       src: <StarIcon className="h-6 w-6 text-yellow-400" />,
