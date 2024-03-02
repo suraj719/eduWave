@@ -32,6 +32,7 @@ import { Toaster, toast } from "react-hot-toast";
 import ChatStudent from "./pages/DashboardPage/Student/Chat";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import AddResource from "./pages/DashboardPage/Teacher/AddResource";
+import Resources from "./pages/DashboardPage/Student/Resources";
 
 function App() {
   const { loading } = useSelector((state) => state.alert);
@@ -267,6 +268,14 @@ function App() {
             <ProtectedTeacherRoute>
               <AddResource />
             </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/student/resources"
+          element={
+            <ProtectedStudentRoute>
+              <Resources />
+            </ProtectedStudentRoute>
           }
         />
       </Routes>

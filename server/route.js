@@ -20,6 +20,10 @@ const {
   getAllQuiz,
   getQuiz,
 } = require("./controllers/QuizController");
+const {
+  createResource,
+  getAllResource,
+} = require("./controllers/ResourceController");
 const router = express.Router();
 
 // routes for teacher
@@ -33,6 +37,9 @@ router.route("/teacher/add-quiz").post(authMiddlewareTeacher, createQuiz);
 router
   .route("/teacher/update-task")
   .post(authMiddlewareTeacher, updateTasksTeacher);
+router
+  .route("/teacher/upload-resource")
+  .post(authMiddlewareTeacher, createResource);
 // routes for student
 router.route("/student/login").post(loginStudent);
 router
@@ -46,6 +53,7 @@ router
   .post(authMiddlewareStudent, updateTasksStudent);
 
 // routes common for both teacher and student
+router.route("/get-resources").get(getAllResource);
 router.route("/get-students").get(getAllStudents);
 router.route("/get-all-quiz").get(getAllQuiz);
 router.route("/quiz/:quizID").get(getQuiz);
