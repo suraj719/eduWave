@@ -4,6 +4,60 @@ Introducing eduWave: an innovative solution at the intersection of technology an
 ```
 access our app at https://edu-wave.vercel.app
 ```
+## Features
+## Teacher Side Features:
+1. **Student Management:**
+   - Create and manage student login credentials.
+   - Organize student profiles and access.
+
+2. **Task Management:**
+   - Maintain to-do lists for assignments, tasks, and deadlines.
+   - Set reminders and notifications for upcoming events.
+
+3. **Resource Sharing:**
+   - Share educational materials, documents, and resources with students.
+   - Upload files, links, and multimedia content for easy access.
+
+4. **Interactive Learning:**
+   - Conduct live video conferences for interactive teaching.
+   - Engage students in real-time discussions, Q&A sessions, and lectures.
+
+5. **Assessment and Progress:**
+   - Create and manage quizzes, tests, and assessments.
+   - View detailed statistics and analytics on student performance.
+
+6. **Engagement and Motivation:**
+   - Showcase leaderboards to encourage healthy competition.
+   - Recognize student achievements and progress publicly.
+
+## Student Side Features:
+1. **Task Management and Planning:**
+   - Maintain personal to-do lists for study tasks and assignments.
+   - Organize schedules and deadlines for better time management.
+
+2. **Personalized Learning Paths:**
+   - Explore custom learning paths based on interests and goals.
+   - Access recommended study materials and resources.
+
+3. **Interactive Canvas Board:**
+   - Engage in interactive learning activities on a virtual canvas.
+   - Collaborate with peers and teachers on group projects and discussions.
+
+4. **Assessment and Practice:**
+   - Attempt quizzes and assessments for self-assessment and practice.
+   - Receive instant feedback and results to track progress.
+
+5. **Subject-Based Statistics:**
+   - View detailed statistics on performance in various subjects.
+   - Identify strengths and weaknesses to focus on improvement areas.
+
+6. **ChatAI for Reference:**
+   - Utilize an AI-powered chatbot for quick answers and reference.
+   - Access instant explanations, definitions, and study tips.
+
+7. **Motivation and Engagement:**
+   - Participate in leaderboards to track personal progress.
+
 ## Installation
 Clone my repository
 ```
