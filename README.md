@@ -42,5 +42,5 @@ install the dependencies for both client and server
 now, you can view the app at http://localhost:3000
 ```
 ```
-you can access the backend APIs at http://localhost:5051
+you can access the backend APIs at http://localhost:5001
 ```
