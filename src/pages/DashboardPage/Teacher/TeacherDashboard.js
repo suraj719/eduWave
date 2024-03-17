@@ -152,7 +152,7 @@ export default function TeacherDashboard() {
 
   return (
     <>
-      <div className="flex h-[100vh]">
+      <div className="flex h-[90vh]">
         <TeacherSideBar />
         <div>
           <div className="p-8">

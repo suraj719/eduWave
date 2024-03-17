@@ -6,7 +6,7 @@ import Stars from "../../components/Stars/Stars";
 export default function HomePage() {
   return (
     <>
-      <div className="bg-black w-[100vw] h-[100vh]">
+      <div className="bg-black w-[100vw] h-[99vh]">
         <Stars />
         <div className="flex flex-col items-center h-[90vh] justify-center">
           <p className="text-8xl font-bold font-str text-white">EduWave</p>

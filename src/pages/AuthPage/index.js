@@ -4,7 +4,7 @@ import Navbar from "../../components/shared/Navbar";
 
 export default function index() {
   return (
-    <div className="h-[100vh]">
+    <div className="h-[99vh]">
       <Navbar />
       <div className="flex items-center justify-center h-[90%]">
         <div>

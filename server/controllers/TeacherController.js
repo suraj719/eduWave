@@ -48,12 +48,12 @@ const loginTeacher = async (req, res) => {
         success: false,
       });
     }
-    if (teacher.isApproved === false) {
-      return res.status(200).send({
-        message: "Your account is not approved yet",
-        success: false,
-      });
-    }
+    // if (teacher.isApproved === false) {
+    //   return res.status(200).send({
+    //     message: "Your account is not approved yet",
+    //     success: false,
+    //   });
+    // }
     const token = jwt.sign({ teacherID: teacher._id }, process.env.jwt_secret, {
       expiresIn: "12h",
     });

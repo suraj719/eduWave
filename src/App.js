@@ -34,7 +34,8 @@ import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import AddResource from "./pages/DashboardPage/Teacher/AddResource";
 import Resources from "./pages/DashboardPage/Student/Resources";
 import StatisticsStudent from "./pages/DashboardPage/Student/Statistics";
-
+import MeetIndex from "./pages/VideoSDK";
+import StudentRegister from "./pages/AuthPage/Student/StudentRegister";
 function App() {
   const { loading } = useSelector((state) => state.alert);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -73,7 +74,7 @@ function App() {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "f") {
+    if (event.key === "f" && isStudentRoute) {
       toggleFullScreen();
     }
   };
@@ -173,7 +174,46 @@ function App() {
             </ProtectedTeacherRoute>
           }
         />
-
+        <Route
+          path="/dashboard/teacher/resources"
+          element={
+            <ProtectedTeacherRoute>
+              <AddResource />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher/leaderboard"
+          element={
+            <ProtectedTeacherRoute>
+              <LeaderBoardTeacher />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher/emeet"
+          element={
+            <ProtectedTeacherRoute>
+              <EMeetTeacher />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher/meet/:roomID"
+          element={
+            <ProtectedTeacherRoute>
+              <TeacherRoom />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/auth/student/register"
+          element={
+            <PublicRoute>
+              <StudentRegister />
+            </PublicRoute>
+          }
+        />
         <Route
           path="/auth/student/login"
           element={
@@ -214,36 +254,13 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
-        <Route
-          path="/dashboard/teacher/leaderboard"
-          element={
-            <ProtectedTeacherRoute>
-              <LeaderBoardTeacher />
-            </ProtectedTeacherRoute>
-          }
-        />
+
         <Route
           path="/dashboard/student/canvas"
           element={
             <ProtectedStudentRoute>
               <CanvasStudent />
             </ProtectedStudentRoute>
-          }
-        />
-        <Route
-          path="/dashboard/teacher/emeet"
-          element={
-            <ProtectedTeacherRoute>
-              <EMeetTeacher />
-            </ProtectedTeacherRoute>
-          }
-        />
-        <Route
-          path="/dashboard/teacher/meet/:roomID"
-          element={
-            <ProtectedTeacherRoute>
-              <TeacherRoom />
-            </ProtectedTeacherRoute>
           }
         />
         <Route
@@ -262,15 +279,7 @@ function App() {
             </ProtectedStudentRoute>
           }
         />
-        <Route path="/chat" element={<ChatStudent />} />
-        <Route
-          path="/dashboard/teacher/resources"
-          element={
-            <ProtectedTeacherRoute>
-              <AddResource />
-            </ProtectedTeacherRoute>
-          }
-        />
+        {/* <Route path="/chat" element={<ChatStudent />} /> */}
         <Route
           path="/dashboard/student/resources"
           element={

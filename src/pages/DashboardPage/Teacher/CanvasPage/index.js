@@ -104,7 +104,24 @@ export default function Canvas() {
       offsetY: (event.clientY - rect.top) * scaleY,
     };
   };
+  const handleSaveImage = () => {
+    // Get the canvas element
+    const canvas = canvasRef.current;
 
+    // Check if the canvas is available
+    if (canvas) {
+      // Convert canvas content to data URL
+      const dataURL = canvas.toDataURL("image/png");
+
+      // Create download link
+      const downloadLink = document.createElement("a");
+      downloadLink.href = dataURL;
+      downloadLink.download = "canvas_image.png";
+
+      // Trigger download
+      downloadLink.click();
+    }
+  };
   return (
     <>
       <div className="flex">
@@ -157,6 +174,11 @@ export default function Canvas() {
               <div>
                 <button onClick={eraseCanvas} className="btn-width">
                   Erase
+                </button>
+              </div>
+              <div>
+                <button onClick={handleSaveImage} className="btn-width">
+                  save
                 </button>
               </div>
             </div>

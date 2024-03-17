@@ -116,7 +116,7 @@ const AddResource = () => {
 
   return (
     <>
-      <div className="flex h-[100vh]">
+      <div className="flex h-[90vh]">
         <TeacherSideBar />
         <div className="flex mt-8 justify-center w-[80vw]">
           <div>

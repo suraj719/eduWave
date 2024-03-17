@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import Navbar from "../../../components/shared/Navbar";
 import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../../redux/alerts";
@@ -53,7 +54,7 @@ export default function StudentLogin() {
     dispatch(HideLoading());
   };
   return (
-    <div className="h-[100vh]">
+    <div className="h-[99vh]">
       <Navbar />
       <div className="bg-black w-full h-[90%]">
         <div className="flex flex-col items-center h-full justify-center">
@@ -64,7 +65,8 @@ export default function StudentLogin() {
                   type="text"
                   onChange={(e) => setRollNumber(e.target.value)}
                   className="rounded-md text-2xl font-bold outline-none p-2 w-full"
-                  placeholder="Roll number"
+                  // placeholder="Roll number"
+                  placeholder="Username"
                   required
                 />
               </div>
@@ -99,6 +101,16 @@ export default function StudentLogin() {
                 )}
               </div>
             </form>
+            <div className="text-white font-halloween text-2xl text-center mt-4">
+              <Link to="/auth/student/register">
+                <p>
+                  Don't have an account ?
+                  <span className="text-red-300 font-bold cursor-pointer">
+                    Register
+                  </span>
+                </p>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

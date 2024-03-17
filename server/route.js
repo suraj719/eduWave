@@ -41,6 +41,7 @@ router
   .route("/teacher/upload-resource")
   .post(authMiddlewareTeacher, createResource);
 // routes for student
+router.route("/student/register").post(createStudent);
 router.route("/student/login").post(loginStudent);
 router
   .route("/student/get-student-by-id")

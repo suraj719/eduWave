@@ -42,7 +42,7 @@ export default function TeacherLogin() {
   };
   return (
     <>
-      <div className="bg-black w-full h-[100vh]">
+      <div className="bg-black w-full h-[99vh]">
         <Navbar />
         <div className="flex flex-col items-center h-[90%] justify-center">
           <div className="bg-gray-800 px-5 py-10 rounded-xl w-[25rem]">

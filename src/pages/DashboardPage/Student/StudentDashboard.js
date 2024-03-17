@@ -30,8 +30,10 @@ export default function StudentDashboard() {
   };
   useEffect(() => {
     getQuote();
-    toast.loading("NOTE: press f to enter full screen");
-    toast.loading("you cannot use the app until you are in full screen mode");
+    // toast.loading("NOTE: press f to enter full screen");
+    toast.loading(
+      "you cannot use the app until you are in full screen mode NOTE: press f to enter full screen"
+    );
     const timeoutId = setTimeout(() => {
       toast.dismiss();
     }, 2000);
@@ -161,7 +163,7 @@ export default function StudentDashboard() {
 
   return (
     <>
-      <div className="flex h-[100vh]">
+      <div className="flex h-[90vh]">
         <StudentSideBar />
         <div>
           <p className="text-white text-xl p-8">{quote?.quote}</p>
