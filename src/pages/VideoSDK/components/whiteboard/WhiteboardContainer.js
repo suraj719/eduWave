@@ -922,7 +922,7 @@ function WhiteboardContainer({
                 pointerEvents: "none",
               }}
             >
-              {arrX.map((_, itemx) =>
+              {/* {arrX.map((_, itemx) =>
                 arrY.map((_, itemy) => (
                   <Box
                     key={`dot_${itemx}_${itemy}`}
@@ -941,7 +941,7 @@ function WhiteboardContainer({
                     }}
                   />
                 ))
-              )}
+              )} */}
             </div>
           </div>
           <canvas

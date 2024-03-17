@@ -4,9 +4,10 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { ShowLoading, HideLoading } from "../../../../redux/alerts";
 import TeacherSideBar from "../../../../components/shared/TeacherSideBar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function QuizPageTeacher() {
+  const navigate = useNavigate();
   const { teacher } = useSelector((state) => state.teacher);
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
@@ -68,6 +69,16 @@ export default function QuizPageTeacher() {
                         <p>class: {quiz.class}</p>
 
                         <p>created on: {dt}</p>
+                        <button
+                          onClick={() => {
+                            navigate(
+                              `/dashboard/teacher/quiz-analytics/${quiz._id}`
+                            );
+                          }}
+                          className="bg-black p-2 rounded-lg w-full text-white mt-2"
+                        >
+                          view analytics
+                        </button>
                       </div>
                     );
                   })}

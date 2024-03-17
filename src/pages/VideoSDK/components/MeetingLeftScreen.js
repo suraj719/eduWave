@@ -64,8 +64,8 @@ const MeetingLeftScreen = ({
   return (
     <div
       style={{
-        height: "100vh",
-        width: "100vw",
+        height: "90vh",
+        width: "90vw",
         position: "relative",
         overflow: "hidden",
         backgroundColor: backgroundColor,

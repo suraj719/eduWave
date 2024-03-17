@@ -256,8 +256,8 @@ export default function JoinMeeting({
     if (webcam) {
       const videoConstraints = {
         video: {
-          width: 1280,
-          height: 720,
+          width: 980,
+          height: 420,
           deviceId: cameraId,
         },
       };
@@ -457,7 +457,7 @@ export default function JoinMeeting({
           display: "flex",
           flex: 1,
           flexDirection: "column",
-          height: "100vh",
+          height: "90vh",
           backgroundColor:
             appTheme === appThemes.DARK
               ? theme.palette.darkTheme.main
@@ -506,7 +506,7 @@ export default function JoinMeeting({
             >
               <Box
                 style={{
-                  width: isXSOnly ? "100%" : "100vw",
+                  width: isXSOnly ? "100%" : "90vw",
                   // isXSOnly ? "100%" : isSMOnly ? "96%" : "100vw",
                   display: "flex",
                   flexDirection: "column",

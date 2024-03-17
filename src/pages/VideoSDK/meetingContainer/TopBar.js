@@ -142,7 +142,7 @@ const useStyles = makeStyles({
   popoverBorder: {
     borderRadius: "12px",
     backgroundColor: "#212032",
-    marginTop: 8,
+    marginTop: 2,
     width: 300,
   },
   popoverHover: {

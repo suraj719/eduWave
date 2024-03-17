@@ -29,6 +29,6 @@ body {
 }
 
 .content {
-  max-height: 80vh !important;
-  /* overflow: hidden; */
+  max-height: 90vh !important;
+  overflow: hidden;
 }

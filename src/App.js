@@ -34,8 +34,8 @@ import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/solid";
 import AddResource from "./pages/DashboardPage/Teacher/AddResource";
 import Resources from "./pages/DashboardPage/Student/Resources";
 import StatisticsStudent from "./pages/DashboardPage/Student/Statistics";
-import MeetIndex from "./pages/VideoSDK";
 import StudentRegister from "./pages/AuthPage/Student/StudentRegister";
+import QuizAnalytics from "./pages/DashboardPage/Teacher/QuizPageTeacher/QuizAnalytics";
 function App() {
   const { loading } = useSelector((state) => state.alert);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -74,7 +74,7 @@ function App() {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "f" && isStudentRoute) {
+    if (event.key === "f") {
       toggleFullScreen();
     }
   };
@@ -203,6 +203,14 @@ function App() {
           element={
             <ProtectedTeacherRoute>
               <TeacherRoom />
+            </ProtectedTeacherRoute>
+          }
+        />
+        <Route
+          path="/dashboard/teacher/quiz-analytics/:quizID"
+          element={
+            <ProtectedTeacherRoute>
+              <QuizAnalytics />
             </ProtectedTeacherRoute>
           }
         />

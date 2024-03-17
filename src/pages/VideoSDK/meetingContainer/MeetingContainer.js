@@ -811,7 +811,7 @@ const MeetingContainer = () => {
     <div
       ref={containerRef}
       style={{
-        height: "100vh",
+        height: "90vh",
         overflow: "hidden",
         position: "relative",
         backgroundColor:
@@ -932,7 +932,7 @@ const MeetingContainer = () => {
               display: "flex",
               flex: 1,
               flexDirection: "column",
-              height: "100vh",
+              height: "90vh",
               justifyContent: "center",
               alignItems: "center",
               backgroundColor:

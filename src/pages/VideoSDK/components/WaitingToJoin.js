@@ -68,7 +68,7 @@ const WaitingToJoin = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: "100vh",
+        height: "90vh",
         backgroundColor:
           appTheme === appThemes.DARK
             ? theme.palette.darkTheme.main
