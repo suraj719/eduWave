@@ -15,6 +15,14 @@ export default function QuizStudent() {
   const [questions, setQuestions] = useState([]);
   const [data, setData] = useState();
   const [accuracy, setAccuracy] = useState();
+  const [remainingTime, setRemainingTime] = useState(10);
+  const [index, setIndex] = useState(0);
+  const [selectedOptions, setSelectedOptions] = useState({});
+  const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState(0);
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true); // Add a loading state
+
   const fetchData = async () => {
     try {
       dispatch(ShowLoading());
@@ -43,6 +51,34 @@ export default function QuizStudent() {
   useEffect(() => {
     fetchData();
   }, []);
+  useEffect(() => {
+    if (!submitted && data && data.maxTime) {
+      const timer = setInterval(() => {
+        setRemainingTime((prevTime) => prevTime - 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [data]);
+  useEffect(() => {
+    if (remainingTime <= 0 && !submitted) {
+      handleSubmit();
+    }
+  }, [remainingTime, submitted]);
+
+  useEffect(() => {
+    if (data && data.maxTime && !submitted) {
+      setRemainingTime(data.maxTime * 60); // Convert minutes to seconds
+    }
+  }, [data, submitted]);
+
+  function formatTime(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+      2,
+      "0"
+    )}`;
+  }
   function shuffleArray(array) {
     // Create a copy of the array to avoid mutating the original array
     const newArray = array.slice();
@@ -61,12 +97,6 @@ export default function QuizStudent() {
       }))
     );
   }
-  const [index, setIndex] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState({});
-  const [submitted, setSubmitted] = useState(false);
-  const [score, setScore] = useState(0);
-  const [shuffledQuestions, setShuffledQuestions] = useState([]);
-  const [isLoading, setIsLoading] = useState(true); // Add a loading state
 
   // const handleSelectOption = (option) => {
   //   setSelectedOptions({ ...selectedOptions, [index]: option });
@@ -88,7 +118,7 @@ export default function QuizStudent() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    // e?.preventDefault();
     setSubmitted(true);
     let correctCount = 0;
     shuffledQuestions.forEach((question, i) => {
@@ -109,6 +139,7 @@ export default function QuizStudent() {
     d.accuracy = formattedAccuracy;
     d.attemptedAt = new Date();
     d.user = student;
+    d.timeTaken = data.maxTime * 60 - remainingTime;
     // console.log(d);
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/api/student/update-student`,
@@ -131,6 +162,11 @@ export default function QuizStudent() {
           {questions ? (
             <div className="flex">
               {submitted && <StudentSideBar />}
+              {!submitted && (
+                <p className="text-white p-5">
+                  Remaining Time: {formatTime(remainingTime)}
+                </p>
+              )}
               <div className="flex flex-col items-center justify-center h-[90vh] w-full">
                 <p className="text-white text-xl">{data.title}</p>
                 <div

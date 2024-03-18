@@ -42,7 +42,7 @@ export default function QuizAnalytics() {
               <p className="font-bold  mt-2 text-xl">Title: {data.title}</p>
               <p>Created At: {new Date(data.date).toLocaleString()}</p>
               <p>Deadline: {new Date(data.deadline).toLocaleString()}</p>
-              <p>Total attempts: {data.attempts.length}</p>
+              <p>Total attempts: {data?.attempts?.length || 0}</p>
               <div
                 className="flex justify-center w-[90vw]"
                 style={{
@@ -51,82 +51,83 @@ export default function QuizAnalytics() {
                   overflow: "auto",
                 }}
               >
-                <table className="table-auto w-[90%] mb-10">
-                  <thead>
-                    <tr>
-                      <th className="px-4 py-2">Name</th>
-                      <th className="px-4 py-2">Score</th>
-                      <th className="px-4 py-2">Accuracy</th>
-                      <th className="px-4 py-2">Attempted at</th>
-                      {data.attempts[0].quiz.questions.map(
-                        (question, questionIndex) => (
-                          <th
-                            data-tooltip-id={`td-ques-${questionIndex}`}
-                            key={questionIndex}
-                            className="px-4 py-2"
-                          >
-                            Question {questionIndex + 1}
-                            <ReactToolTip
-                              id={`td-ques-${questionIndex}`}
-                              place="bottom"
-                              content={question.question_text}
-                            />
-                          </th>
-                        )
-                      )}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {data.attempts.length === 0 ? (
-                      <tr>
-                        <td
-                          colSpan={data.quiz.questions.length + 1}
-                          className="text-center"
-                        >
-                          No attempts made
-                        </td>
-                      </tr>
-                    ) : (
-                      data.attempts.map((attempt, attemptIndex) => (
-                        <tr key={attemptIndex}>
-                          <td className="border px-4 py-2">
-                            {attempt.user.name}
-                          </td>
-                          <td className="border px-4 py-2">{attempt.score}</td>
-                          <td className="border px-4 py-2">
-                            {attempt.accuracy} %
-                          </td>
-                          <td className="border px-4 py-2">
-                            {new Date(attempt.attemptedAt).toLocaleString()}
-                          </td>
-
-                          {attempt.quiz.questions.map(
-                            (question, questionIndex) => {
-                              const selectedOption = question.selectedOption;
-                              const correctOptionIndex =
-                                question.options.indexOf(question.answer);
-                              const isCorrect =
-                                selectedOption ===
-                                question.options[correctOptionIndex];
-                              const bgColor = isCorrect
-                                ? "bg-green-500"
-                                : "bg-red-500";
-                              const textColor = "text-white";
-                              return (
-                                <td
-                                  key={questionIndex}
-                                  className={`border px-4 py-2 ${bgColor} ${textColor} text-center`}
-                                >
-                                  {selectedOption}
-                                </td>
-                              );
-                            }
+                {data?.attempts?.length > 0 ? (
+                  <>
+                    <table className="table-auto w-[90%] mb-10">
+                      <thead>
+                        <tr>
+                          <th className="px-4 py-2">Name</th>
+                          <th className="px-4 py-2">Score</th>
+                          <th className="px-4 py-2">Accuracy</th>
+                          <th className="px-4 py-2">Attempted at</th>
+                          {data?.attempts[0].quiz.questions.map(
+                            (question, questionIndex) => (
+                              <th
+                                data-tooltip-id={`td-ques-${questionIndex}`}
+                                key={questionIndex}
+                                className="px-4 py-2"
+                              >
+                                Question {questionIndex + 1}
+                                <ReactToolTip
+                                  id={`td-ques-${questionIndex}`}
+                                  place="bottom"
+                                  content={question.question_text}
+                                />
+                              </th>
+                            )
                           )}
                         </tr>
-                      ))
-                    )}
-                  </tbody>
-                </table>
+                      </thead>
+                      <tbody>
+                        {data?.attempts?.map((attempt, attemptIndex) => (
+                          <tr key={attemptIndex}>
+                            <td className="border px-4 py-2">
+                              {attempt.user.name}
+                            </td>
+                            <td className="border px-4 py-2">
+                              {attempt.score}
+                            </td>
+                            <td className="border px-4 py-2">
+                              {attempt.accuracy} %
+                            </td>
+                            <td className="border px-4 py-2">
+                              {new Date(attempt.attemptedAt).toLocaleString()}
+                            </td>
+
+                            {attempt?.quiz?.questions.map(
+                              (question, questionIndex) => {
+                                const selectedOption = question.selectedOption;
+                                const correctOptionIndex =
+                                  question.options.indexOf(question.answer);
+                                const isCorrect =
+                                  selectedOption ===
+                                  question.options[correctOptionIndex];
+                                const bgColor = isCorrect
+                                  ? "bg-green-500"
+                                  : "bg-red-500";
+                                const textColor = "text-white";
+                                return (
+                                  <td
+                                    key={questionIndex}
+                                    className={`border px-4 py-2 ${bgColor} ${textColor} text-center`}
+                                  >
+                                    {selectedOption}
+                                  </td>
+                                );
+                              }
+                            )}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </>
+                ) : (
+                  <div className="flex items-center justify-center h-[50vh]">
+                    <p className="text-white text-center text-xl">
+                      No attempts made ✨
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           )}

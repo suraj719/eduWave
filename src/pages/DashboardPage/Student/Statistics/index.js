@@ -1,137 +1,153 @@
-import React, { useState, useEffect } from "react";
-import {
-  PieChart,
-  Pie,
-  Cell,
-  ResponsiveContainer,
-  Tooltip,
-  Legend,
-} from "recharts";
+import React, { useEffect } from "react";
+import * as d3 from "d3";
 import { useSelector } from "react-redux";
 import StudentSideBar from "../../../../components/shared/StudentSideBar";
 
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
-
-const StatisticsStudent = () => {
+function StatisticsStudent() {
   const { student } = useSelector((state) => state.student);
-  const [quizData, setQuizData] = useState([]);
-  const [selectedQuiz, setSelectedQuiz] = useState(null);
+  const { name, quizs } = student;
 
   useEffect(() => {
-    if (student?.quizs && student.quizs.length > 0) {
-      setQuizData(student.quizs);
-    }
-  }, [student]);
-
-  const transformDataForPieChart = (quizs) => {
-    const data = quizs.map((quiz) => {
-      const totalQuestions = quiz.quiz.questions.length;
-      const correctAnswers = quiz.quiz.questions.filter(
-        (question) => question.selectedOption === question.answer
-      ).length;
-      const incorrectAnswers = totalQuestions - correctAnswers;
-      const accuracy = ((correctAnswers / totalQuestions) * 100).toFixed(2);
-
-      return {
-        name: quiz.title,
-        accuracy: parseFloat(accuracy),
-        correct: correctAnswers,
-        incorrect: incorrectAnswers,
-        total: totalQuestions,
+    if (quizs?.length > 0) {
+      const calculateTimeSpent = (quiz) => {
+        return quiz.timeTaken / 60;
       };
-    });
 
-    return data;
-  };
+      const subjectsData = {};
+      quizs.forEach((quiz) => {
+        if (!subjectsData[quiz.subject]) {
+          subjectsData[quiz.subject] = {
+            accuracySum: 0,
+            scoreSum: 0,
+            attemptsCount: 0,
+            totalTimeSpent: 0,
+          };
+        }
+        subjectsData[quiz.subject].accuracySum += parseFloat(quiz.accuracy);
+        subjectsData[quiz.subject].scoreSum += quiz.score;
+        subjectsData[quiz.subject].attemptsCount++;
+        subjectsData[quiz.subject].totalTimeSpent += calculateTimeSpent(quiz);
+      });
 
-  const data = transformDataForPieChart(quizData);
+      const pieData = Object.keys(subjectsData).map((subject) => ({
+        subject,
+        accuracy:
+          subjectsData[subject].accuracySum /
+          subjectsData[subject].attemptsCount,
+        score:
+          subjectsData[subject].scoreSum / subjectsData[subject].attemptsCount,
+        attempts: subjectsData[subject].attemptsCount,
+        totalTimeSpent:
+          subjectsData[subject].totalTimeSpent /
+          subjectsData[subject].attemptsCount,
+      }));
 
-  const handleLegendClick = (entry) => {
-    setSelectedQuiz(entry.name);
-  };
+      d3.select("#chartContainer").selectAll("*").remove();
 
-  const renderCustomizedLabel = ({
-    name,
-    correct,
-    incorrect,
-    total,
-    accuracy,
-  }) => (
-    <div
-      className="text-white"
-      style={{
-        color: "white",
-        padding: "10px",
-        backgroundColor: "rgba(255, 255, 255, 0.9)",
-        borderRadius: "5px",
-      }}
-    >
-      <p style={{ margin: "5px 0", fontWeight: "bold" }}>{name}</p>
-      <p style={{ margin: "5px 0" }}>Correct: {correct}</p>
-      <p style={{ margin: "5px 0" }}>Incorrect: {incorrect}</p>
-      <p style={{ margin: "5px 0" }}>Total: {total}</p>
-      <p style={{ margin: "5px 0" }}>Accuracy: {accuracy}%</p>
-    </div>
-  );
+      const width = 300;
+      const height = 300;
+      const radius = Math.min(width, height) / 2;
 
-  const handlePieClick = (entry) => {
-    setSelectedQuiz(entry.payload.name);
-  };
+      const color = d3.scaleOrdinal(d3.schemeCategory10);
 
-  return (
-    <>
-      <div className="flex">
-        <StudentSideBar />
-        <div>
-          <div className="flex items-center justify-center" >
-            <ResponsiveContainer width="100%" height={500}>
-              <PieChart>
-                <Pie
-                  data={data}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={80}
-                  dataKey="accuracy"
-                  label={({ name, percent }) =>
-                    `${name} - ${(percent * 100).toFixed(2)}%`
-                  }
-                  onClick={handlePieClick}
-                >
-                  {data.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Legend onClick={handleLegendClick} />
-              </PieChart>
-            </ResponsiveContainer>
-            {selectedQuiz && (
-              <div className="text-white" style={{ marginTop: "20px" }}>
-                <h3>Selected Quiz Details</h3>
-                <p>Name: {selectedQuiz}</p>
-                {data.map((entry, index) => {
-                  if (entry.name === selectedQuiz) {
-                    return (
-                      <div key={index}>
-                        <p>Correct: {entry.correct}</p>
-                        <p>Incorrect: {entry.incorrect}</p>
-                        <p>Total: {entry.total}</p>
-                        <p>Accuracy: {entry.accuracy}%</p>
-                      </div>
-                    );
-                  }
-                  return null;
-                })}
+      const arc = d3.arc().innerRadius(0).outerRadius(radius);
+
+      const pie = d3.pie().value((d) => d.accuracy);
+
+      const svg = d3
+        .select("#chartContainer")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+      const arcs = svg.selectAll("arc").data(pie(pieData)).enter().append("g");
+
+      arcs
+        .append("path")
+        .attr("fill", (d, i) => color(i))
+        .attr("d", arc)
+        .on("mouseover", (event, d) => {
+          const tooltip = d3.select("#tooltip");
+          tooltip.transition().duration(200).style("opacity", 0.9);
+          tooltip
+            .html(
+              `<strong>Subject:</strong> ${d.data.subject}<br/>
+               <strong>Average Accuracy:</strong> ${d.data.accuracy.toFixed(
+                 2
+               )}%<br/>
+               <strong>Average Score:</strong> ${d.data.score.toFixed(2)}<br/>
+               <strong>Tests Attempted:</strong> ${d.data.attempts}<br/>
+               <strong>Average Time Spent:</strong> ${d.data.totalTimeSpent.toFixed(
+                 2
+               )} minutes`
+            )
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY + "px");
+        })
+        .on("mouseout", () => {
+          const tooltip = d3.select("#tooltip");
+          tooltip.transition().duration(500).style("opacity", 0);
+        });
+
+      arcs
+        .append("text")
+        .attr("transform", (d) => `translate(${arc.centroid(d)})`)
+        .attr("text-anchor", "middle")
+        .text((d) => d.data.subject);
+    }
+  }, [quizs]);
+
+  if (quizs?.length > 0) {
+    return (
+      <>
+        <div className="flex">
+          <StudentSideBar />
+          <div className="w-full px-5">
+            <h2 className="text-2xl font-bold text-white mt-4">
+              {name}'s Analytics
+            </h2>
+            <div className="flex items-center mt-12 gap-4">
+              <div
+                id="averageScore"
+                className="flex-1 bg-gray-100 p-4 rounded-md"
+              >
+                <h3 className="text-lg font-semibold">Average Score</h3>
+                <p>{student.averageScore}</p>
               </div>
-            )}
+              <div
+                id="averageAccuracy"
+                className="flex-1 bg-gray-100 p-4 rounded-md"
+              >
+                <h3 className="text-lg font-semibold">Average Accuracy</h3>
+                <p>{student.averageAccuracy}%</p>
+              </div>
+            </div>
+            <div className="flex flex-col items-center justify-center h-[80%]">
+              <div id="chartContainer"></div>
+              <div
+                id="tooltip"
+                className="absolute bg-gray-100 border p-2 rounded-md pointer-events-none"
+                style={{ opacity: 0 }}
+              ></div>
+            </div>
           </div>
         </div>
+      </>
+    );
+  } else {
+    return (
+      <div className="flex">
+        <StudentSideBar />
+        <div className="flex items-center justify-center h-[60vh] w-full">
+          <p className="text-white text-center text-xl">
+            No quizzes attempted yet ✨
+          </p>
+        </div>
       </div>
-    </>
-  );
-};
+    );
+  }
+}
 
 export default StatisticsStudent;

@@ -28,6 +28,10 @@ const quizSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  maxTime: {
+    type: Number,
+    required: true,
+  },
   attempts: {
     type: mongoose.Schema.Types.Mixed,
   },

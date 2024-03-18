@@ -41,11 +41,21 @@ export default function ScoreCard({ questions, score, accuracy }) {
               {questions[index].options.map((option, id) => {
                 return (
                   <button
+                    // className={
+                    //   "rounded-lg p-4 px-8 bg-sky-200 text-black w-[60%] mt-2 hover:bg-sky-300" +
+                    //   (questions[index].answer === option
+                    //     ? "border border-4 border-green-500 bg-sky-300"
+                    //     : "")
+                    // }
                     className={
-                      "rounded-lg p-4 px-8 bg-sky-200 text-black w-[60%] mt-2 hover:bg-sky-300" +
-                      (questions[index].answer === option
-                        ? "border border-4 border-green-500 bg-sky-300"
-                        : "")
+                      "rounded-lg p-4 px-8 bg-sky-200 text-black w-[60%] mt-2 hover:bg-sky-300 " +
+                      (questions[index]?.selectedOption === option
+                        ? option === questions[index]?.answer
+                          ? "border border-4 border-green-500 bg-sky-300" // Selected and correct
+                          : "border border-4 border-red-500" // Selected but incorrect
+                        : option === questions[index]?.answer
+                        ? "border border-4 border-green-500" // Correct answer not selected
+                        : "") // Neither selected nor correct
                     }
                     key={option + id}
                   >

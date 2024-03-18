@@ -41,7 +41,7 @@ function App() {
   const [isFullScreen, setIsFullScreen] = useState(false);
   const location = useLocation();
   const isStudentRoute = location.pathname.includes("/dashboard/student");
-  const isQuizRoute = location.pathname.includes("/quiz/student");
+  const isQuizRoute = location.pathname.includes("/dashboard/student/quiz");
   useEffect(() => {
     // const handleBeforeUnload = (event) => {
     //   event.preventDefault();
@@ -247,7 +247,7 @@ function App() {
           }
         />
         <Route
-          path="/quiz/student/:id"
+          path="dashboard/student/quiz/:id"
           element={
             <ProtectedStudentRoute>
               <QuizStudent />

@@ -31,7 +31,7 @@ export default function StudentDashboard() {
   useEffect(() => {
     getQuote();
     // toast.loading("NOTE: press f to enter full screen");
-    toast.loading(
+    toast(
       "you cannot use the app until you are in full screen mode NOTE: press f to enter full screen"
     );
     const timeoutId = setTimeout(() => {

@@ -18,6 +18,7 @@ export default function GenerateQuiz() {
   const [background, setBackground] = useState("");
   const [quizClass, setQuizClass] = useState("");
   const [deadline, setDeadline] = useState();
+  const [maxTime, setMaxTime] = useState();
   // Function to add a question
   const addQuestion = () => {
     setQuestions([
@@ -78,6 +79,7 @@ export default function GenerateQuiz() {
         title: quizTitle,
         quiz: quizData,
         deadline: deadline,
+        maxTime: maxTime,
       };
       let response = null;
       response = await axios.post(
@@ -160,13 +162,26 @@ export default function GenerateQuiz() {
                 />
               </div>
               <div>
-                <label className="text-white">deadline of the quiz*: </label>
+                <label className="text-white">Deadline of the quiz*: </label>
                 <input
                   className="outline-none rounded-lg px-2 py-1 w-full z-10"
                   type="datetime-local"
                   // value={deadline}
                   min={new Date().toISOString().split(".")[0]}
                   onChange={(e) => setDeadline(e.target.value)}
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-white">
+                  Maximum mins for the quiz*:{" "}
+                </label>
+                <input
+                  className="outline-none rounded-lg px-2 py-1 w-full z-10"
+                  type="number"
+                  value={maxTime}
+                  // min={new Date().toISOString().split(".")[0]}
+                  onChange={(e) => setMaxTime(e.target.value)}
                   required
                 />
               </div>

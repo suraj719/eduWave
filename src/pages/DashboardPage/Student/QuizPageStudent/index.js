@@ -224,7 +224,7 @@ export default function QuizPageStudent() {
                             : {quiz.quiz.questions.length}
                           </p>
                           {quizType === "online" && (
-                            <Link to={`/quiz/student/${quiz._id}`}>
+                            <Link to={`/dashboard/student/quiz/${quiz._id}`}>
                               <button className="bg-gray-900 text-white px-4 p-2 rounded-lg hover:bg-gray-700 ">
                                 Start quiz
                               </button>

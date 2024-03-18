@@ -63,7 +63,10 @@ export default function QuizPageTeacher() {
                       year: "numeric",
                     });
                     return (
-                      <div className="bg-gray-200 rounded-lg p-4" key={index}>
+                      <div
+                        className="bg-gray-200 rounded-lg p-4 w-[15rem]"
+                        key={index}
+                      >
                         <p>{quiz.title}</p>
                         <p>subject: {quiz.subject}</p>
                         <p>class: {quiz.class}</p>
@@ -75,7 +78,7 @@ export default function QuizPageTeacher() {
                               `/dashboard/teacher/quiz-analytics/${quiz._id}`
                             );
                           }}
-                          className="bg-black p-2 rounded-lg w-full text-white mt-2"
+                          className="bg-black p-2 rounded-lg w-full text-white mt-2 relative"
                         >
                           view analytics
                         </button>

@@ -56,11 +56,11 @@ export default function Resources() {
                 </ul>
               </div>
             ) : (
-              <>
-                <p className="text-white text-xl text-center">
-                  No resources shared
+              <div className="flex items-center justify-center h-[60vh] w-full">
+                <p className="text-white font-str text-xl text-center">
+                  No resources shared.... ✨
                 </p>
-              </>
+              </div>
             )}
           </div>
         </div>
