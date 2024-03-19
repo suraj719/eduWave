@@ -60,14 +60,14 @@ export default function QuizAnalytics() {
                           <th className="px-4 py-2">Score</th>
                           <th className="px-4 py-2">Accuracy</th>
                           <th className="px-4 py-2">Attempted at</th>
-                          {data?.attempts[0].quiz.questions.map(
+                          {data?.quiz.questions.map(
                             (question, questionIndex) => (
                               <th
                                 data-tooltip-id={`td-ques-${questionIndex}`}
                                 key={questionIndex}
                                 className="px-4 py-2"
                               >
-                                Question {questionIndex + 1}
+                                {`Question ${questionIndex + 1}`}{" "}
                                 <ReactToolTip
                                   id={`td-ques-${questionIndex}`}
                                   place="bottom"
@@ -94,9 +94,15 @@ export default function QuizAnalytics() {
                               {new Date(attempt.attemptedAt).toLocaleString()}
                             </td>
 
-                            {attempt?.quiz?.questions.map(
+                            {data?.quiz.questions.map(
                               (question, questionIndex) => {
-                                const selectedOption = question.selectedOption;
+                                const sortedQuestion =
+                                  attempt.quiz.questions.find(
+                                    (q) =>
+                                      q.question_text === question.question_text
+                                  );
+                                const selectedOption =
+                                  sortedQuestion.selectedOption;
                                 const correctOptionIndex =
                                   question.options.indexOf(question.answer);
                                 const isCorrect =

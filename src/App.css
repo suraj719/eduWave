@@ -4,7 +4,7 @@
 }
 
 .font-str {
-  font-family: "strickwire" !important;
+  font-family: "strickwire", Arial, sans-serif !important;
 }
 
 body {

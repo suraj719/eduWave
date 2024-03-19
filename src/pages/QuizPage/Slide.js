@@ -3,10 +3,10 @@ import React from "react";
 export default function Slide({ question, selected, onSelect }) {
   return (
     <>
-      <p className="font-str text-center font-bold text-black my-2 text-4xl">
+      <p className=" text-center font-bold text-black my-2 text-4xl">
         {question.question_text}
       </p>
-      <div className="font-str text-white text-2xl w-full flex flex-col items-center">
+      <div className="text-white text-2xl w-full flex flex-col items-center">
         {question.options.map((option, index) => {
           return (
             <button

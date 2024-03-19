@@ -305,7 +305,7 @@ function App() {
           }
         />
       </Routes>
-      {isStudentRoute && !isQuizRoute && (
+      {/* {isStudentRoute && !isQuizRoute && (
         <>
           <div className="fixed bottom-8 right-8 z-50">
             {isChatOpen && <ChatStudent />}
@@ -318,7 +318,7 @@ function App() {
             </div>
           </div>
         </>
-      )}
+      )} */}
     </>
   );
 }

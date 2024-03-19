@@ -48,16 +48,16 @@ const sendQuizEmail = async (studentEmail, title, deadline) => {
       hour12: true,
     });
     await transporter.sendMail({
-      from: "gitty690@gmail.com",
+      from: "gitty695@gmail.com",
       to: `${studentEmail}`,
-      subject: "A new quiz has been added",
-      text: `A new quiz on ${title} have been created. 
-      Attempt the quiz before the deadline (${fdd} ${ftd})
+      subject: "A new quiz has been added for you",
+      html: `<p>A new quiz on ${title} have been created.<br/>
+      Attempt the quiz before the deadline (${fdd} ${ftd})</p>
       `,
     });
     // console.log("Email sent successfully to:", studentEmail);
   } catch (error) {
-    throw new Error("Error sending email to student:", error);
+    throw new Error("Error sending email to student");
   }
 };
 

@@ -39,11 +39,11 @@ export default function AttemptedQuiz({ questions, opened, handleClose }) {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <button
                     onClick={handleClose}
-                    className="float-right -mt-5 font-bold"
+                    className="float-right -mt-5 -me-4 font-bold text-2xl"
                   >
                     X
                   </button>
@@ -75,17 +75,20 @@ export default function AttemptedQuiz({ questions, opened, handleClose }) {
                         </button>
                       )}
                       {opened && (
-                        <div className="w-[70%] flex flex-col items-center">
-                          <p className="font-str text-center font-bold text-black my-2 text-4xl">
+                        <div
+                          className="w-[70%] flex flex-col items-center"
+                          style={{ zIndex: "10" }}
+                        >
+                          <p className=" text-center font-bold text-black my-2 text-4xl">
                             {questions?.questions[index]?.question_text}
                           </p>
-                          <div className="font-str text-white text-2xl w-full flex flex-col items-center">
+                          <div className=" text-white text-2xl w-full flex flex-col items-center">
                             {questions?.questions[index]?.options.map(
                               (option, Opindex) => {
                                 return (
                                   <button
                                     className={
-                                      "rounded-lg p-4 px-8 bg-sky-200 text-black w-[60%] mt-2 hover:bg-sky-300 " +
+                                      "rounded-lg p-4 px-8 bg-sky-200 text-black w-[70%] mt-2 hover:bg-sky-300" +
                                       (questions?.questions[index]
                                         ?.selectedOption === option
                                         ? option ===

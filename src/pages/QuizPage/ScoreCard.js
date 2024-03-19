@@ -45,10 +45,10 @@ export default function ScoreCard({ questions, score, accuracy }) {
             </button>
           )}
           <div className="w-[70%] flex flex-col items-center">
-            <p className="font-str text-center font-bold text-black my-2 text-4xl">
+            <p className=" text-center font-bold text-black my-2 text-4xl">
               {questions[index].question_text}
             </p>
-            <div className="font-str text-white text-2xl w-full flex flex-col items-center">
+            <div className=" text-white text-2xl w-full flex flex-col items-center">
               {questions[index].options.map((option, id) => {
                 return (
                   <button
