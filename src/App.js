@@ -42,24 +42,33 @@ function App() {
   const location = useLocation();
   const isStudentRoute = location.pathname.includes("/dashboard/student");
   const isQuizRoute = location.pathname.includes("/dashboard/student/quiz");
+
   useEffect(() => {
-    // const handleBeforeUnload = (event) => {
-    //   event.preventDefault();
-    //   event.returnValue = ""; // Some browsers require this line.
-    //   return ""; // For others.
-    // };
-    // window.addEventListener("blur", () => {
-    //   alert("Don't forget about your goals !! study hard soldier !!");
-    // });
-    // window.addEventListener("beforeunload", handleBeforeUnload);
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = ""; // Some browsers require this line.
+      return ""; // For others.
+    };
+
+    const handleBlur = () => {
+      if (isStudentRoute) {
+        alert("Don't forget about your goals!! Study hard, soldier!!");
+      }
+    };
+
+    window.addEventListener("blur", handleBlur);
+    window.addEventListener("beforeunload", handleBeforeUnload);
     document.addEventListener("fullscreenchange", handleFullScreenChange);
     document.addEventListener("keydown", handleKeyDown);
+
     return () => {
-      // window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("blur", handleBlur);
+      window.removeEventListener("beforeunload", handleBeforeUnload);
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
       document.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
+
   useEffect(() => {
     if (isFullScreen && isStudentRoute) {
       const intervalId = setInterval(() => {
@@ -69,6 +78,7 @@ function App() {
       return () => clearInterval(intervalId);
     }
   }, [isFullScreen, isStudentRoute]);
+
   const handleFullScreenChange = () => {
     setIsFullScreen(!!document.fullscreenElement);
   };

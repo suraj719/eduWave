@@ -94,6 +94,9 @@ export default function LeaderBoardTeacher() {
                         <td className=" w-80 p-2 border-r-2 border-r-gray-300">
                           Name
                         </td>
+                        <td className=" p-2 border-r-2 border-r-gray-300">
+                          Username
+                        </td>
                         <td className="p-2 border-r-2 border-r-gray-300">
                           Class
                         </td>
@@ -122,6 +125,9 @@ export default function LeaderBoardTeacher() {
                           </td>
                           <td className="border w-80 border-gray-300">
                             {std.name}
+                          </td>
+                          <td className="border  border-gray-300">
+                            {std.rollNumber}
                           </td>
                           <td className="border border-gray-300">
                             {std.class}

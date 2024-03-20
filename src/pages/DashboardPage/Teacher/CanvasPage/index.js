@@ -1,10 +1,12 @@
 import React, { useRef, useState, useEffect } from "react";
 import TeacherSideBar from "../../../../components/shared/TeacherSideBar";
 
-export default function Canvas() {
+export default function CanvasStudent() {
   const [isDrawing, setIsDrawing] = useState(false);
   const [color, setColor] = useState("#3B3B3B");
   const [size, setSize] = useState("3");
+  const [history, setHistory] = useState([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
   const canvasRef = useRef(null);
   const ctx = useRef(null);
   const timeout = useRef(null);
@@ -21,15 +23,46 @@ export default function Canvas() {
     // Load from localStorage
     const canvasimg = localStorage.getItem("canvasimg");
     if (canvasimg) {
-      var image = new Image();
-      ctx.current = canvas.getContext("2d");
-      image.onload = function () {
+      const image = new Image();
+      image.onload = () => {
         ctx.current.drawImage(image, 0, 0);
-        setIsDrawing(false);
+        setHistory([canvasimg]);
+        setHistoryIndex(0);
       };
       image.src = canvasimg;
     }
   }, []);
+
+  const saveToHistory = () => {
+    const canvas = canvasRef.current;
+    const snapshot = canvas.toDataURL("image/png");
+    setHistory([...history.slice(0, historyIndex + 1), snapshot]);
+    setHistoryIndex(historyIndex + 1);
+  };
+
+  const undo = () => {
+    if (historyIndex > 0) {
+      setHistoryIndex(historyIndex - 1);
+      redrawCanvas(history[historyIndex - 1]);
+    }
+  };
+
+  const redo = () => {
+    if (historyIndex < history.length - 1) {
+      setHistoryIndex(historyIndex + 1);
+      redrawCanvas(history[historyIndex + 1]);
+    }
+  };
+
+  const redrawCanvas = (snapshot) => {
+    const canvas = canvasRef.current;
+    const image = new Image();
+    image.onload = () => {
+      ctx.current.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.current.drawImage(image, 0, 0);
+    };
+    image.src = snapshot;
+  };
 
   const startPosition = ({ nativeEvent }) => {
     setIsDrawing(true);
@@ -38,11 +71,13 @@ export default function Canvas() {
       nativeEvent
     );
     draw({ nativeEvent: { offsetX, offsetY } });
+    saveToHistory();
   };
 
   const finishedPosition = () => {
     setIsDrawing(false);
     ctx.current.beginPath();
+    saveToHistory();
   };
 
   const draw = ({ nativeEvent }) => {
@@ -74,27 +109,20 @@ export default function Canvas() {
     const context = canvas.getContext("2d");
     context.fillStyle = "white";
     context.fillRect(0, 0, canvas.width, canvas.height);
-
-    if (timeout.current !== undefined) clearTimeout(timeout.current);
-    timeout.current = setTimeout(function () {
-      var base64ImageData = canvas.toDataURL("image/png");
-      localStorage.setItem("canvasimg", base64ImageData);
-    }, 400);
+    setHistory([]);
+    setHistoryIndex(-1);
   };
 
   const getPen = () => {
     setCursor("default");
-    // setSize("3");
     setColor("#3B3B3B");
   };
 
   const eraseCanvas = () => {
     setCursor("grab");
-    // setSize("20");
     setColor("#FFFFFF");
   };
 
-  // Function to get mouse position relative to canvas
   const getMousePosition = (canvas, event) => {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
@@ -104,24 +132,18 @@ export default function Canvas() {
       offsetY: (event.clientY - rect.top) * scaleY,
     };
   };
+
   const handleSaveImage = () => {
-    // Get the canvas element
     const canvas = canvasRef.current;
-
-    // Check if the canvas is available
     if (canvas) {
-      // Convert canvas content to data URL
       const dataURL = canvas.toDataURL("image/png");
-
-      // Create download link
       const downloadLink = document.createElement("a");
       downloadLink.href = dataURL;
       downloadLink.download = "canvas_image.png";
-
-      // Trigger download
       downloadLink.click();
     }
   };
+
   return (
     <>
       <div className="flex">
@@ -142,7 +164,7 @@ export default function Canvas() {
               <button onClick={getPen}>
                 <p>Draw</p>
               </button>
-              <div className="btn-width color">
+              <div className="">
                 <span>Brush color: </span>
                 <input
                   className="w-[5rem] bg-gray-700"
@@ -158,29 +180,26 @@ export default function Canvas() {
                   value={size}
                   onChange={(e) => setSize(e.target.value)}
                 >
-                  <option>1</option>
-                  <option>3</option>
-                  <option>5</option>
-                  <option>10</option>
-                  <option>15</option>
-                  <option>20</option>
-                  <option>25</option>
-                  <option>30</option>
+                  {[1, 5, 10, 15, 20, 25, 30].map((option) => (
+                    <option key={option}>{option}</option>
+                  ))}
                 </select>
               </div>
               <button onClick={clearCanvas} className="btn-width">
                 Clear
               </button>
-              <div>
-                <button onClick={eraseCanvas} className="btn-width">
-                  Erase
-                </button>
-              </div>
-              <div>
-                <button onClick={handleSaveImage} className="btn-width">
-                  save
-                </button>
-              </div>
+              <button onClick={undo} className="btn-width">
+                Undo
+              </button>
+              <button onClick={redo} className="btn-width">
+                Redo
+              </button>
+              <button onClick={eraseCanvas} className="btn-width">
+                Erase
+              </button>
+              <button onClick={handleSaveImage} className="btn-width">
+                Save
+              </button>
             </div>
           </div>
         </div>
