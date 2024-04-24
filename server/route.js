@@ -13,6 +13,9 @@ const {
   getTeacher,
   updateTasksTeacher,
 } = require("./controllers/TeacherController");
+
+const {sendMessage,getMessages} = require("./controllers/MessageController");
+
 const authMiddlewareTeacher = require("./middlewares/authMiddlewareTeacher");
 const authMiddlewareStudent = require("./middlewares/authMiddlewareStudent");
 const {
@@ -58,4 +61,9 @@ router.route("/get-resources").get(getAllResource);
 router.route("/get-students").get(getAllStudents);
 router.route("/get-all-quiz").get(getAllQuiz);
 router.route("/quiz/:quizID").get(getQuiz);
+
+// routes for chat
+router.route("/chat").post(sendMessage);
+router.route("/chat/:id").get(getMessages);
+// https://github.com/ShakirFarhan/Realtime-Chat
 module.exports = router;
