@@ -1,15 +1,19 @@
 const mongoose = require("mongoose");
 
-const TeacherSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  subject: String,
-  isApproved: {
-    type: Boolean,
-    default: false,
+const TeacherSchema = new mongoose.Schema(
+  {
+    name: String,
+    email: String,
+    password: String,
+    subject: String,
+    isApproved: {
+      type: Boolean,
+      default: false,
+    },
+    tasks: mongoose.Schema.Types.Mixed,
   },
-  tasks: mongoose.Schema.Types.Mixed,
-});
+
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("teachers", TeacherSchema);
