@@ -1,10 +1,13 @@
-# eduWave 
+# eduWave : Interactive Learning & Assessment Platform
 ## Introduction
 Introducing eduWave: an innovative solution at the intersection of technology and mindfulness, designed to revolutionize education. By empowering teachers with interactive course design tools and providing students with customizable study environments, eduWave enhances focus and engagement in learning. Through features like distraction-blocking applications and gamified learning platforms, we aim to cultivate a conducive learning environment. Join us in shaping the future of education with eduWave.
-```
-access our app at https://edu-wave.vercel.app
-watch a demo of the app: https://www.youtube.com/watch?v=jmVAoCwxQFg
-```
+
+🌐 Explore the Platform:
+- 🔗 Access the app: [edu-wave.vercel.app](https://edu-wave.vercel.app)
+- 🎥 Watch the demo: [Youtube](https://www.youtube.com/watch?v=jmVAoCwxQFg)
+
+
+
 ## Features
 ## Teacher Side Features:
 1. **Student Management:**
