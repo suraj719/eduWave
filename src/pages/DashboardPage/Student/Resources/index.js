@@ -41,7 +41,7 @@ export default function Resources() {
           <div>
             {data?.length > 0 ? (
               <div className="mt-4">
-                <h2>Uploaded Files:</h2>
+                <h2 className="text-white">Uploaded Files:</h2>
                 <ul className="w-full">
                   {data?.map((file, index) => (
                     <li

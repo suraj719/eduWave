@@ -108,7 +108,7 @@ function App() {
     <>
       {loading || (isStudentRoute && !isFullScreen) ? <Spinner /> : null}
       <Toaster />
-      <Stars />
+      {location.pathname !== "/" && <Stars />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route
