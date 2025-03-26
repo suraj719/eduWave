@@ -156,7 +156,7 @@ function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <section className="py-10 relative overflow-hidden">
+      <section className="p-10 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-purple-900/10 z-0"></div>
         <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center relative z-1">
           <div className="space-y-6">
@@ -250,7 +250,7 @@ function HomePage() {
       </section>
 
       {/* How It Works */}
-      <section className="py-20 bg-gradient-to-b from-black to-gray-950">
+      <section className="py-20 px-10 bg-gradient-to-b from-black to-gray-950">
         <div className="container mx-auto px-4">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-blue-600">

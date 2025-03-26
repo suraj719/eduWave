@@ -7,9 +7,7 @@ Introducing eduWave: an innovative solution at the intersection of technology an
 - 🎥 Watch the demo: [Youtube](https://www.youtube.com/watch?v=jmVAoCwxQFg)
 
 
-
-## Features
-## Teacher Side Features:
+## Features for students:
 1. **Student Management:**
    - Create and manage student login credentials.
    - Organize student profiles and access.
@@ -34,7 +32,7 @@ Introducing eduWave: an innovative solution at the intersection of technology an
    - Showcase leaderboards to encourage healthy competition.
    - Recognize student achievements and progress publicly.
 
-## Student Side Features:
+## Features for students:
 1. **Task Management and Planning:**
    - Maintain personal to-do lists for study tasks and assignments.
    - Organize schedules and deadlines for better time management.
@@ -67,7 +65,7 @@ Clone my repository
 ```
   git clone https://github.com/suraj719/eduWave.git
 ```
-add a .env file with the below config in the root directory
+create a .env file with the below config in the root directory
 ```
 REACT_APP_BACKEND_URL = "http://localhost:5001"
 REACT_APP_CHAT_API_KEY = "open ai api key"
@@ -78,13 +76,14 @@ REACT_APP_STORAGE_BUCKET="firebase config"
 REACT_APP_MESSAGING_SENDER_ID = "firebase config"
 REACT_APP_APP_ID = "firebase config"
 ```
-add another .env with the below config in the ```server``` directory
+create another .env file with the below config in the ```server``` directory
 ```
 MONGO_URL = ""
-jwt_secret = "
-clientId = "client id of gcp"
-clientSecret = "client secret of gcp"
-refreshToken="refresh token you get from the OAuth playground"
+jwt_secret = ""
+
+#nodemailer
+smtp_user="yourmail@gmail.com"
+smtp_pass="your app password"
 ```
 install the dependencies for both client and server
 ```
