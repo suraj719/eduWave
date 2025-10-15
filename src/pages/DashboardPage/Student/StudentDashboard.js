@@ -10,26 +10,8 @@ export default function StudentDashboard() {
   const { student } = useSelector((state) => state.student);
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
-  const [quote, setQuote] = useState();
-  const getQuote = async () => {
-    try {
-      const response = await axios.get(
-        "https://api.api-ninjas.com/v1/quotes?category=success",
-        {
-          headers: {
-            "X-Api-Key": `R509+72S2aqIVQc6ITpB/A==GwRl6NVj8PGHSkCr`,
-          },
-        }
-      );
-      if (response) {
-        setQuote(response?.data[0]);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   useEffect(() => {
-    getQuote();
     // toast.loading("NOTE: press f to enter full screen");
     toast(
       "you cannot use the app until you are in full screen mode NOTE: press f to enter full screen"
@@ -165,43 +147,42 @@ export default function StudentDashboard() {
     <>
       <div className="flex h-[90vh]">
         <StudentSideBar />
-        <div>
-          <p className="text-white text-xl p-8">{quote?.quote}</p>
-          <div className="flex items-center justify-center w-[80vw]">
-            <div className="max-w-md mx-auto">
-              <form className="flex items-center mb-4" onSubmit={handleAddTask}>
+        <div className="flex-1 mt-8 px-6 overflow-auto">
+          <div className="max-w-4xl mx-auto w-full">
+            <div className="bg-gray-800/60 rounded-xl p-6 shadow-xl border border-gray-700">
+              <h2 className="text-white text-2xl font-bold mb-4">
+                Task Manager
+              </h2>
+              <form
+                className="flex items-center gap-3 mb-4"
+                onSubmit={handleAddTask}
+              >
                 <input
                   type="text"
-                  className="rounded-md text-2xl font-bold outline-none p-2 w-full mr-2"
+                  className="rounded-md text-lg font-semibold outline-none p-3 bg-gray-700/70 text-white placeholder-gray-300 flex-1"
                   placeholder="Enter new task"
                   value={newTask}
                   required
                   onChange={(e) => setNewTask(e.target.value)}
                 />
-                <button className="w-1/2 border text-4xl font-halloween border-white text-xl hover:bg-gray-600 text-white px-10 py-3 rounded-lg">
+                <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-6 py-3 rounded-lg font-semibold transition">
                   Add Task
                 </button>
               </form>
               {tasks && tasks.length > 0 ? (
-                <div className="mb-10 pb-10">
-                  <ul
-                    className="mb-10"
-                    style={{
-                      maxHeight: "65vh",
-                      overflowY: "auto",
-                    }}
-                  >
+                <div className="mb-2">
+                  <ul className="space-y-2 max-h-[55vh] overflow-y-auto pr-1">
                     {tasks?.map((task) => (
                       <li
                         key={task.id}
-                        className={`flex justify-between items-center py-2 text-white bg-gray-700 mt-2 rounded-lg p-2 hover:bg-gray-600 ${
+                        className={`flex justify-between items-center text-white bg-gray-800/60 border border-gray-700 rounded-lg p-3 hover:bg-gray-700/70 ${
                           task.isCompleted ? "line-through" : ""
                         }`}
                       >
-                        <p>{task.text}</p>
-                        <div>
+                        <p className="mr-4">{task.text}</p>
+                        <div className="flex items-center">
                           <button
-                            className="ml-2 text-red-500 hover:text-red-600"
+                            className="ml-2 text-red-400 hover:text-red-300"
                             onClick={() => removeTask(task.id)}
                           >
                             <svg
@@ -221,7 +202,7 @@ export default function StudentDashboard() {
                           </button>
                           {!task.isCompleted && (
                             <button
-                              className="ml-2 text-green-500 hover:text-green-600"
+                              className="ml-2 text-green-400 hover:text-green-300"
                               onClick={() => completeTask(task.id)}
                             >
                               <svg
@@ -246,11 +227,17 @@ export default function StudentDashboard() {
                   </ul>
                 </div>
               ) : (
-                <>
-                  <p className="text-white text-center text-xl">
-                    There are no tasks to complete ✨
-                  </p>
-                </>
+                <div className="flex items-center justify-center h-[20vh] w-full">
+                  <div className="text-center">
+                    <div className="mx-auto h-14 w-14 rounded-full bg-gray-700/60 flex items-center justify-center mb-3">
+                      <span className="text-xl">📝</span>
+                    </div>
+                    <p className="text-white text-lg font-semibold">
+                      There are no tasks to complete
+                    </p>
+                    <p className="text-gray-300">Add a task to get started.</p>
+                  </div>
+                </div>
               )}
             </div>
           </div>

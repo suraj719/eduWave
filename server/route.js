@@ -23,7 +23,11 @@ const {
 const {
   createResource,
   getAllResource,
+  updateResource,
+  starResource,
 } = require("./controllers/ResourceController");
+const multer = require("multer");
+const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 
 // routes for teacher
@@ -39,7 +43,7 @@ router
   .post(authMiddlewareTeacher, updateTasksTeacher);
 router
   .route("/teacher/upload-resource")
-  .post(authMiddlewareTeacher, createResource);
+  .post(authMiddlewareTeacher, upload.single("file"), createResource);
 // routes for student
 router.route("/student/register").post(createStudent);
 router.route("/student/login").post(loginStudent);
@@ -55,6 +59,8 @@ router
 
 // routes common for both teacher and student
 router.route("/get-resources").get(getAllResource);
+router.route("/teacher/resources/:id").patch(authMiddlewareTeacher, updateResource);
+router.route("/resources/:id/star").post(authMiddlewareStudent, starResource);
 router.route("/get-students").get(getAllStudents);
 router.route("/get-all-quiz").get(getAllQuiz);
 router.route("/quiz/:quizID").get(getQuiz);
