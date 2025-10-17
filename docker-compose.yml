@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:6.0
+    container_name: eduwave-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: eduwave
+    volumes:
+      - mongodb_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - eduwave-network
+
+  # Backend API
+  backend:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: eduwave-backend
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    environment:
+      NODE_ENV: production
+      MONGO_URL: mongodb://admin:password@mongodb:27017/eduwave?authSource=admin
+      jwt_secret: your-super-secret-jwt-key-change-this
+      smtp_user: ${SMTP_USER:-}
+      smtp_pass: ${SMTP_PASS:-}
+      AWS_REGION: ${AWS_REGION:-}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-}
+      AWS_BUCKET_NAME: ${AWS_BUCKET_NAME:-}
+      AWS_BUCKET_URL: ${AWS_BUCKET_URL:-}
+    depends_on:
+      - mongodb
+    networks:
+      - eduwave-network
+
+  # Frontend
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REACT_APP_BACKEND_URL: http://localhost:5001
+        REACT_APP_CHAT_API_KEY: ${REACT_APP_CHAT_API_KEY}
+    container_name: eduwave-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - eduwave-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  eduwave-network:
+    driver: bridge

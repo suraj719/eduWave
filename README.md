@@ -69,12 +69,6 @@ create a .env file with the below config in the root directory
 ```
 REACT_APP_BACKEND_URL = "http://localhost:5001"
 REACT_APP_CHAT_API_KEY = "open ai api key"
-REACT_APP_API_KEY = "firebase config"
-REACT_APP_AUTH_DOMAIN = "firebase config"
-REACT_APP_PROJECT_ID = "firebase config"
-REACT_APP_STORAGE_BUCKET="firebase config"
-REACT_APP_MESSAGING_SENDER_ID = "firebase config"
-REACT_APP_APP_ID = "firebase config"
 ```
 create another .env file with the below config in the ```server``` directory
 ```
@@ -84,6 +78,13 @@ jwt_secret = ""
 #nodemailer
 smtp_user="yourmail@gmail.com"
 smtp_pass="your app password"
+
+#AWS S3 Configuration
+AWS_REGION = "your-aws-region"
+AWS_ACCESS_KEY_ID = "your-aws-access-key"
+AWS_SECRET_ACCESS_KEY = "your-aws-secret-key"
+AWS_BUCKET_NAME = "your-s3-bucket-name"
+AWS_BUCKET_URL = "https://your-bucket.s3.region.amazonaws.com"
 ```
 install the dependencies for both client and server
 ```
@@ -100,4 +101,46 @@ now, you can view the app at http://localhost:3000
 ```
 ```
 you can access the backend APIs at http://localhost:5001
+```
+
+## Docker Deployment
+
+### Prerequisites
+- Docker and Docker Compose installed on your system
+- AWS S3 credentials configured
+
+### Quick Start with Docker
+
+1. **Clone the repository and navigate to the project directory**
+
+2. **Copy environment variables:**
+```bash
+cp env.example .env
+```
+
+3. **Edit the .env file with your actual values:**
+```bash
+# Update all the environment variables in .env file
+```
+
+4. **Build and start all services:**
+```bash
+docker-compose up --build
+```
+
+5. **Access the application:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5001
+- MongoDB: localhost:27017
+
+### Docker Commands
+
+**Start services in background:**
+```bash
+docker-compose up -d
+```
+
+**Stop all services:**
+```bash
+docker-compose down
 ```
