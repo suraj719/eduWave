@@ -30,8 +30,7 @@ export default function EMeetStudent() {
                   <button
                     onClick={() =>
                       navigate(
-                        `/dashboard/student/meet/${roomID}?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlrZXkiOiJlZmM1MGJiOC0wZjVmLTRjMmMtOTlmYS1kYmM2NGE3MGJjZGQiLCJwZXJtaXNzaW9ucyI6WyJhbGxvd19qb2luIl0sImlhdCI6MTcxMDY1MjExMywiZXhwIjoxNzQyMTg4MTEzfQ.KN8wQgDjGlEC-DTcswBDLweQhb-JAbms2Hafk5zCj3A&meetingId=${roomID}&webcamEnabled=true&micEnabled=true`
-                      )
+                        ``)
                     }
                     className="w-full border text-4xl font-halloween border-white text-xl hover:bg-gray-600 text-white px-10 py-3 mt-8"
                   >
